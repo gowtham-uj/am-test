@@ -17,10 +17,14 @@ let url = argv.url;
 
 let mocha = new Mocha();
 
-var bootstrapPath = path.dirname(require.resolve("am-test/package.json"));
-console.log(path.join(bootstrapPath, "test.js"));
+// path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
+const testFilePath = path.join(
+  path.dirname(require.resolve("am-test/package.json")),
+  "test.js"
+);
+// console.log();
 
-mocha.addFile(testPath);
+mocha.addFile(testFilePath);
 
 mocha.run(function (failures) {
   process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
