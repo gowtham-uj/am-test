@@ -1,0 +1,113 @@
+{
+  "routes": [
+    {
+      "route_desc": "create mentor ",
+      "route_path": "/create-mentor",
+      "route_type": "post",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": true,
+      "route_body": {
+        "name": "guvi test bot",
+        "email": "guvitest@guvi.in",
+        "role": "beginner",
+        "experience": "1"
+      }
+    },
+    {
+      "route_desc": "create student ",
+      "route_path": "/create-student",
+      "route_type": "post",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": true,
+      "route_body": {
+        "name": "guvi test bot",
+        "email": "guvitest@guvi.in",
+        "course": "FSD",
+        "level": "beginner"
+      }
+    },
+    {
+      "route_desc": "get all students ",
+      "route_path": "/get-students",
+      "route_type": "get",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": false,
+      "route_body": {}
+    },
+    {
+      "route_desc": "get all mentors ",
+      "route_path": "/get-mentors",
+      "route_type": "get",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": true,
+      "route_body": {}
+    },
+    {
+      "route_desc": "assign a(one) student to mentor ",
+      "route_path": "/assign-student",
+      "route_type": "post",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": true,
+      "route_body": {
+        "studentId": "aa",
+        "mentorId": "a"
+      }
+    },
+    {
+      "route_desc": "assign multiple students to mentor ",
+      "route_path": "/assign-students",
+      "route_type": "post",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": true,
+      "route_body": {
+        "studentIds": ["bb", "cc"],
+        "mentorId": "a"
+      }
+    },
+    {
+      "route_desc": "change mentor for student ",
+      "route_path": "/change-mentor",
+      "route_type": "post",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": true,
+      "route_body": {
+        "studentId": "aa",
+        "newMentorId": "b"
+      }
+    },
+    {
+      "route_desc": "get student for a mentor ",
+      "route_path": "/get-mentor-studs",
+      "route_type": "post",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": false,
+      "route_body": {
+        "mentorId": "a"
+      }
+    }
+  ]
+}
