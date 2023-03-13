@@ -18,7 +18,7 @@ let url = argv.url;
 let mocha = new Mocha();
 
 var bootstrapPath = path.dirname(require.resolve("am-test/package.json"));
-console.log(bootstrapPath);
+// console.log(bootstrapPath);
 
 mocha.addFile(testPath);
 
