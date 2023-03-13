@@ -17,7 +17,7 @@ let url = argv.url;
 
 let mocha = new Mocha();
 
-console.log(path.resolve(process.cwd, "../test.js"));
+console.log(path.resolve(`${process.cwd}`, "../test.js"));
 
 mocha.addFile(testPath);
 
