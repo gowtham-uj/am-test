@@ -5,6 +5,7 @@ const argv = yargs(hideBin(process.argv)).argv;
 
 const Mocha = require("mocha");
 const path = require("path");
+const testPath = require("test");
 
 if (!argv.url) {
   console.log(`please provide the url of the live app to test the app.
@@ -17,7 +18,7 @@ let url = argv.url;
 
 let mocha = new Mocha();
 
-mocha.addFile("../test.js");
+mocha.addFile(testPath);
 
 mocha.run(function (failures) {
   process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures

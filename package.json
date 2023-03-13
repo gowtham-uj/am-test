@@ -9,6 +9,9 @@
   "bin": {
     "am-test": "./bin/index.js"
   },
+  "imports": {
+    "test": "./test.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
