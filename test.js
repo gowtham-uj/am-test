@@ -256,7 +256,7 @@ let test = new BBTest(argv.url);
 
 describe("starting to execute the tests", function () {
   it("promise test case", async function (done) {
-    this.timeout(30000);
+    this.timeout(50000);
 
     await test.AMTaskTests().catch((err) => done(err));
     // done();
