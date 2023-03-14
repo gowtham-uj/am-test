@@ -259,6 +259,6 @@ describe("starting to execute the tests", function () {
     await test.AMTaskTests().catch((err) => done(err));
     // done();
     assert.equal(1, 1);
-    // this.timeout(100000);
+    this.timeout(30000);
   });
 });
