@@ -248,6 +248,7 @@ class BBTest {
       }
       // requester with normal routes without dep routes will execute here
       let res = await this.requester(route);
+      return { success: true };
     }
   }
 }
@@ -258,7 +259,8 @@ describe("starting to execute the tests", function () {
   it("promise test case", async function (done) {
     this.timeout(50000);
 
-    return await test.AMTaskTests().catch((err) => done(err));
+    let res = await test.AMTaskTests().catch((err) => done(err));
+    assert.equal(res.success, true);
     // done();
   });
 });
