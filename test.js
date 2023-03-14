@@ -6,7 +6,6 @@ const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
 const sleep = require("sleep-promise");
-const piston = import("piston-client");
 
 class BBTest {
   constructor(liveLink) {
@@ -62,8 +61,6 @@ class BBTest {
       let attempts = 0;
       let res = null;
       while (attempts < maxReqAttempts) {
-        const client = piston({ server: "https://emkc.org" });
-
         let result = await axios({
           url: "https://emkc.org/api/v2/piston/execute",
           method: "post",
