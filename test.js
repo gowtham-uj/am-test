@@ -80,18 +80,19 @@ class BBTest {
             compileMemoryLimit: -1,
             runMemoryLimit: -1,
           },
-        }).catch(async (error) => {
+        }).catch((error) => {
           if (error.response || error.request) {
-            await sleep(300);
           }
         });
         if (result.status === 200 && !!result.data.run) {
           res = result;
           break;
         }
-        attempts = attempts + 1;
 
         // await sleep(2 ** attempts + Math.random());
+        await sleep(300);
+
+        attempts = attempts + 1;
       }
       let cleanedOut = res.data.run.output;
       // console.log(res.run);
