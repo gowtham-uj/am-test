@@ -225,7 +225,6 @@ class BBTest {
   async AMTaskTests() {
     await this.parseConfigJson();
     // console.log(this.routeDetails.length);
-    const testBase = request(this.liveLink);
 
     for (let index = 0; index < this.routeDetails.length; index++) {
       let derivedDepValues = {};
