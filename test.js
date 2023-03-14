@@ -64,23 +64,27 @@ class BBTest {
       while (attempts < maxReqAttempts) {
         const client = piston({ server: "https://emkc.org" });
 
-        let result = await client.execute({
-          language: "javascript",
-          version: "16.3.0",
-          files: [
-            {
-              name: "my_cool_code.js",
-              content: `let res = JSON.parse(process.argv[2]); console.log(${codeInTemplate});`,
-            },
-          ],
-          stdin: "",
-          args: [JSON.stringify(templateDepDataObj.res)],
-          compileTimeout: 10000,
-          runTimeout: 3000,
-          compileMemoryLimit: -1,
-          runMemoryLimit: -1,
+        let result = await axios({
+          url: "https://emkc.org/api/v2/piston/execute",
+          method: "post",
+          data: {
+            language: "javascript",
+            version: "16.3.0",
+            files: [
+              {
+                name: "my_cool_code.js",
+                content: `let res = JSON.parse(process.argv[2]); console.log(${codeInTemplate});`,
+              },
+            ],
+            stdin: "",
+            args: [JSON.stringify(templateDepDataObj.res)],
+            compileTimeout: 10000,
+            runTimeout: 3000,
+            compileMemoryLimit: -1,
+            runMemoryLimit: -1,
+          },
         });
-        if (result.message != "Requests limited to 1 per 200ms") {
+        if (result.response.message != "Requests limited to 1 per 200ms") {
           res = result;
           break;
         }
@@ -90,7 +94,7 @@ class BBTest {
 
         attempts = attempts + 1;
       }
-      let cleanedOut = res.run.output;
+      let cleanedOut = res.data.run.output;
       // console.log(res.run);
       derivedValsObj[derivedValKey] = cleanedOut;
       let tryJsonParse = null;
