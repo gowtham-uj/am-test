@@ -6,6 +6,7 @@ const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
 const sleep = require("sleep-promise");
+const piston = require("piston-client");
 
 class BBTest {
   constructor(liveLink) {
