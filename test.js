@@ -60,7 +60,7 @@ class BBTest {
       let maxReqAttempts = 10;
       let attempts = 0;
       let res = null;
-      while (attempts < maxReqAttempts) {
+      loop1: while (attempts < maxReqAttempts) {
         let result = await axios({
           url: "https://emkc.org/api/v2/piston/execute",
           method: "post",
@@ -80,16 +80,18 @@ class BBTest {
             compileMemoryLimit: -1,
             runMemoryLimit: -1,
           },
+        }).catch(async (error) => {
+          if (error.response || error.request) {
+            await sleep(300);
+          }
         });
-        if (result.response.message != "Requests limited to 1 per 200ms") {
+        if (result.status === 200 && !!result.data.run) {
           res = result;
           break;
         }
+        attempts = attempts + 1;
 
         // await sleep(2 ** attempts + Math.random());
-        await sleep(300);
-
-        attempts = attempts + 1;
       }
       let cleanedOut = res.data.run.output;
       // console.log(res.run);
