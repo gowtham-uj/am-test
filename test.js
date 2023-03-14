@@ -248,8 +248,8 @@ class BBTest {
       }
       // requester with normal routes without dep routes will execute here
       let res = await this.requester(route);
-      return { success: true };
     }
+    return { success: true };
   }
 }
 
