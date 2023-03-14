@@ -1,7 +1,7 @@
 {
   "routes": [
     {
-      "route_desc": "create mentor ",
+      "route_desc": "create mentor in the application",
       "route_path": "/create-mentor",
       "route_type": "post",
       "are_query_params": false,
@@ -14,10 +14,11 @@
         "email": "guvitest@guvi.in",
         "role": "beginner",
         "experience": "1"
-      }
+      },
+      "top_level": true
     },
     {
-      "route_desc": "create student ",
+      "route_desc": "create student in the application",
       "route_path": "/create-student",
       "route_type": "post",
       "are_query_params": false,
@@ -30,10 +31,11 @@
         "email": "guvitest@guvi.in",
         "course": "FSD",
         "level": "beginner"
-      }
+      },
+      "top_level": true
     },
     {
-      "route_desc": "get all students ",
+      "route_desc": "get all students in the application",
       "route_path": "/get-students",
       "route_type": "get",
       "are_query_params": false,
@@ -41,21 +43,23 @@
       "are_route_params": false,
       "route_parameters": {},
       "is_route_body": false,
-      "route_body": {}
+      "route_body": {},
+      "top_level": true
     },
     {
-      "route_desc": "get all mentors ",
+      "route_desc": "get all mentors in the application",
       "route_path": "/get-mentors",
       "route_type": "get",
       "are_query_params": false,
       "query_parameters": {},
       "are_route_params": false,
       "route_parameters": {},
-      "is_route_body": true,
-      "route_body": {}
+      "is_route_body": false,
+      "route_body": {},
+      "top_level": true
     },
     {
-      "route_desc": "assign a(one) student to mentor ",
+      "route_desc": "assign a(one) student to mentor in the application",
       "route_path": "/assign-student",
       "route_type": "post",
       "are_query_params": false,
@@ -64,12 +68,41 @@
       "route_parameters": {},
       "is_route_body": true,
       "route_body": {
-        "studentId": "aa",
-        "mentorId": "a"
-      }
+        "studentId": "@dep.studentId",
+        "mentorId": "@dep.mentorId"
+      },
+      "top_level": true,
+      "dependency_routes": [
+        {
+          "route_desc": "get all students in the application",
+          "route_path": "/get-students",
+          "route_type": "get",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": false,
+          "route_body": {},
+          "dep_key": "dep.studentId",
+          "dep_res_val": "$${res.data[0].id}"
+        },
+        {
+          "route_desc": "get all mentors in the application",
+          "route_path": "/get-mentors",
+          "route_type": "get",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": false,
+          "route_body": {},
+          "dep_key": "dep.mentorId",
+          "dep_res_val": "$${res.data[0].id}"
+        }
+      ]
     },
     {
-      "route_desc": "assign multiple students to mentor ",
+      "route_desc": "assign multiple students to mentor in the application",
       "route_path": "/assign-students",
       "route_type": "post",
       "are_query_params": false,
@@ -78,12 +111,41 @@
       "route_parameters": {},
       "is_route_body": true,
       "route_body": {
-        "studentIds": ["bb", "cc"],
-        "mentorId": "a"
-      }
+        "studentIds": "@dep.studentIds",
+        "mentorId": "@dep.mentorId"
+      },
+      "top_level": true,
+      "dependency_routes": [
+        {
+          "route_desc": "get all students in the application",
+          "route_path": "/get-students",
+          "route_type": "get",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": false,
+          "route_body": {},
+          "dep_key": "dep.studentIds",
+          "dep_res_val": "$${res.data.reduce((preVal,currVal,ind,arr) => [...preVal,currVal.id], [])}"
+        },
+        {
+          "route_desc": "get all mentors in the application",
+          "route_path": "/get-mentors",
+          "route_type": "get",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": false,
+          "route_body": {},
+          "dep_key": "dep.mentorId",
+          "dep_res_val": "$${res.data[0].id}"
+        }
+      ]
     },
     {
-      "route_desc": "change mentor for student ",
+      "route_desc": "change mentor for student in the application",
       "route_path": "/change-mentor",
       "route_type": "post",
       "are_query_params": false,
@@ -92,12 +154,41 @@
       "route_parameters": {},
       "is_route_body": true,
       "route_body": {
-        "studentId": "aa",
-        "newMentorId": "b"
-      }
+        "studentId": "@dep.studentId",
+        "newMentorId": "@dep.mentorId"
+      },
+      "top_level": true,
+      "dependency_routes": [
+        {
+          "route_desc": "get all students in the application",
+          "route_path": "/get-students",
+          "route_type": "get",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": false,
+          "route_body": {},
+          "dep_key": "dep.studentId",
+          "dep_res_val": "$${res.data[0].id}"
+        },
+        {
+          "route_desc": "get all mentors in the application",
+          "route_path": "/get-mentors",
+          "route_type": "get",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": false,
+          "route_body": {},
+          "dep_key": "dep.mentorId",
+          "dep_res_val": "$${res.data[1].id}"
+        }
+      ]
     },
     {
-      "route_desc": "get student for a mentor ",
+      "route_desc": "get student for a mentor in the application",
       "route_path": "/get-mentor-studs",
       "route_type": "post",
       "are_query_params": false,
@@ -106,8 +197,24 @@
       "route_parameters": {},
       "is_route_body": false,
       "route_body": {
-        "mentorId": "a"
-      }
+        "mentorId": "@dep.mentorId"
+      },
+      "top_level": true,
+      "dependency_routes": [
+        {
+          "route_desc": "get all mentors in the application",
+          "route_path": "/get-mentors",
+          "route_type": "get",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": false,
+          "route_body": {},
+          "dep_key": "dep.mentorId",
+          "dep_res_val": "$${res.data[0].id}"
+        }
+      ]
     }
   ]
 }
