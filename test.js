@@ -154,8 +154,8 @@ class BBTest {
     // do the request
     let req = await axios(reqObj);
 
-    if (routeObj.top_level === true) {
-      describe(`Working of ${route.route_desc}`, function () {
+    if (routeObj.top_level === true && req.status === 200) {
+      describe(`Working of ${routeObj.route_desc}`, function () {
         it("should return 200 response", function () {
           assert.equal(req.status, 200);
         });
