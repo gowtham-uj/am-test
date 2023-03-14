@@ -18,9 +18,7 @@ class BBTest {
   }
   // parse the json file details about routes
   async parseConfigJson() {
-    const json = JSON.parse(
-      await readFile(new URL("./AM-TASK.json", import.meta.url))
-    );
+    const json = require("./AM-TASK.json");
     this.routeDetails = json.routes;
   }
   async replaceFieldsWithDerivedVals(routeObj, derivedVals) {
