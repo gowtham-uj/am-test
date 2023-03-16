@@ -7,7 +7,7 @@
     "test": "mocha"
   },
   "bin": {
-    "am-test": ".index.js"
+    "am-test": "index.js"
   },
   "keywords": [],
   "author": "",
