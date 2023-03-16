@@ -10,8 +10,8 @@ const mochawesome = require("mochawesome");
 let mocha = new Mocha({
   reporter: "mochawesome",
   reporterOptions: {
-    reportFilename: "customReportFilename",
-    reportFilename: "[status]_[datetime]-[am-test]-report",
+    // reportFilename: "customReportFilename",
+    reportFilename: "[status]_[datetime]-[test-xyz]-report",
     quiet: true,
     html: true,
     json: true,
