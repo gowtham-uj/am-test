@@ -11,6 +11,7 @@ let mocha = new Mocha({
   reporter: "mochawesome",
   reporterOptions: {
     reportFilename: "customReportFilename",
+    reportFilename: "[status]_[datetime]-[am-test]-report",
     quiet: true,
     html: true,
     json: true,
