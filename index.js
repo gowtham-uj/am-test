@@ -47,6 +47,7 @@ if (require.main === module) {
   function runTests(liveUrl, outputDest) {
     return outputDest;
   }
+  module.exports = { runTests };
 }
 
 /*
