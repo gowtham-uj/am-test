@@ -5,8 +5,17 @@ const argv = yargs(hideBin(process.argv)).argv;
 
 const Mocha = require("mocha");
 const path = require("path");
+const mochawesome = require("mochawesome");
 
-let mocha = new Mocha();
+let mocha = new Mocha({
+  reporter: "mochawesome",
+  reporterOptions: {
+    reportFilename: "customReportFilename",
+    quiet: true,
+    html: true,
+    json: true,
+  },
+});
 
 // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
 const testFilePath = path.join(
