@@ -1,7 +1,7 @@
 {
   "routes": [
     {
-      "route_desc": "create mentor in the application",
+      "route_desc": "create mentor",
       "route_path": "/create-mentor",
       "route_type": "post",
       "are_query_params": false,
@@ -18,7 +18,7 @@
       "top_level": true
     },
     {
-      "route_desc": "create student in the application",
+      "route_desc": "create student",
       "route_path": "/create-student",
       "route_type": "post",
       "are_query_params": false,
@@ -35,7 +35,7 @@
       "top_level": true
     },
     {
-      "route_desc": "get all students in the application",
+      "route_desc": "get all students",
       "route_path": "/get-students",
       "route_type": "get",
       "are_query_params": false,
@@ -47,7 +47,7 @@
       "top_level": true
     },
     {
-      "route_desc": "get all mentors in the application",
+      "route_desc": "get all mentors",
       "route_path": "/get-mentors",
       "route_type": "get",
       "are_query_params": false,
@@ -59,7 +59,7 @@
       "top_level": true
     },
     {
-      "route_desc": "assign a(one) student to mentor in the application",
+      "route_desc": "assign a(one) student to mentor",
       "route_path": "/assign-student",
       "route_type": "post",
       "are_query_params": false,
@@ -74,7 +74,7 @@
       "top_level": true,
       "dependency_routes": [
         {
-          "route_desc": "get all students in the application",
+          "route_desc": "get all students",
           "route_path": "/get-students",
           "route_type": "get",
           "are_query_params": false,
@@ -87,7 +87,7 @@
           "dep_res_val": "$${res.data[0].id}"
         },
         {
-          "route_desc": "get all mentors in the application",
+          "route_desc": "get all mentors",
           "route_path": "/get-mentors",
           "route_type": "get",
           "are_query_params": false,
@@ -102,7 +102,7 @@
       ]
     },
     {
-      "route_desc": "assign multiple students to mentor in the application",
+      "route_desc": "assign multiple students to mentor",
       "route_path": "/assign-students",
       "route_type": "post",
       "are_query_params": false,
@@ -117,7 +117,7 @@
       "top_level": true,
       "dependency_routes": [
         {
-          "route_desc": "get all students in the application",
+          "route_desc": "get all students",
           "route_path": "/get-students",
           "route_type": "get",
           "are_query_params": false,
@@ -130,7 +130,7 @@
           "dep_res_val": "$${res.data.reduce((preVal,currVal,ind,arr) => [...preVal,currVal.id], [])}"
         },
         {
-          "route_desc": "get all mentors in the application",
+          "route_desc": "get all mentors",
           "route_path": "/get-mentors",
           "route_type": "get",
           "are_query_params": false,
@@ -145,7 +145,7 @@
       ]
     },
     {
-      "route_desc": "change mentor for student in the application",
+      "route_desc": "change mentor for student",
       "route_path": "/change-mentor",
       "route_type": "post",
       "are_query_params": false,
@@ -160,7 +160,7 @@
       "top_level": true,
       "dependency_routes": [
         {
-          "route_desc": "get all students in the application",
+          "route_desc": "get all students",
           "route_path": "/get-students",
           "route_type": "get",
           "are_query_params": false,
@@ -173,7 +173,7 @@
           "dep_res_val": "$${res.data[0].id}"
         },
         {
-          "route_desc": "get all mentors in the application",
+          "route_desc": "get all mentors",
           "route_path": "/get-mentors",
           "route_type": "get",
           "are_query_params": false,
@@ -188,7 +188,7 @@
       ]
     },
     {
-      "route_desc": "get student for a mentor in the application",
+      "route_desc": "get student for a mentor",
       "route_path": "/get-mentor-studs",
       "route_type": "post",
       "are_query_params": false,
@@ -202,7 +202,7 @@
       "top_level": true,
       "dependency_routes": [
         {
-          "route_desc": "get all mentors in the application",
+          "route_desc": "get all mentors",
           "route_path": "/get-mentors",
           "route_type": "get",
           "are_query_params": false,
