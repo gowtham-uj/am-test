@@ -44,7 +44,9 @@ if (require.main === module) {
     process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
   });
 } else {
-  console.log("required as a module");
+  function runTests(liveUrl, outputDest) {
+    return outputDest;
+  }
 }
 
 /*
