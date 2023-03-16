@@ -26,7 +26,7 @@ if (require.main === module) {
   let mocha = new Mocha({
     reporter: "mocha-simple-html-reporter",
     reporterOptions: {
-      output: doesStoreOut ? argv.outputDest : null,
+      output: doesStoreOut ? path.resolve(argv.outputDest) : null,
     },
   });
 
