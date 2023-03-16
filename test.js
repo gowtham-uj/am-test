@@ -261,25 +261,6 @@ class BBTest {
   }
 }
 
-// describe("starting to execute the tests", function () {
-//   this.timeout(50000);
-
-//   let testRes = null;
-//   this.beforeAll(async function () {
-//     this.timeout(50000);
-
-//     let test = new BBTest("https://dummy-assign-mentor.onrender.com");
-
-//     testRes = await test.AMTaskTests();
-//   });
-//   it("promise test case", async function (done) {
-//     this.timeout(50000);
-//     assert.equal(testRes.success, true);
-//     // return;
-//     // done();
-//   });
-// });
-
 describe("starting to execute the tests", async function () {
   this.timeout(100000);
   this.beforeAll(async () => {
