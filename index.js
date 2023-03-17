@@ -58,7 +58,8 @@ if (require.main === module) {
       "test.js"
     );
 
-    argv.url = liveUrl;
+    // argv.url = liveUrl;
+    global.url = liveUrl;
 
     mocha.addFile(testFilePath);
 
