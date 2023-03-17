@@ -262,6 +262,8 @@ describe("starting to execute the tests", async function () {
   this.beforeAll(async () => {
     // let test = new BBTest("https://dummy-assign-mentor.onrender.com");
     // console.log(process.env.TEST_URL);
+    let url = process.env.TEST_URL;
+    console.log(url, typeof url);
     let test = new BBTest("https://dummy-assign-mentor.onrender.com");
     let res = await test.AMTaskTests();
   });
