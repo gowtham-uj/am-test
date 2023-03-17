@@ -45,7 +45,26 @@ if (require.main === module) {
   });
 } else {
   function runTests(liveUrl, outputDest) {
-    return outputDest;
+    let mocha = new Mocha({
+      reporter: "mocha-simple-html-reporter",
+      reporterOptions: {
+        output: outputDest,
+      },
+    });
+
+    // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
+    const testFilePath = path.join(
+      path.dirname(require.resolve("am-test/package.json")),
+      "test.js"
+    );
+
+    argv.url = liveUrl;
+
+    mocha.addFile(testFilePath);
+
+    mocha.run(function (failures) {
+      // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
+    });
   }
   module.exports = { runTests };
 }
