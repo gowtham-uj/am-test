@@ -265,7 +265,7 @@ describe("starting to execute the tests", async function () {
   this.timeout(100000);
   this.beforeAll(async () => {
     // let test = new BBTest("https://dummy-assign-mentor.onrender.com");
-    // console.log(argv.url);
+    console.log(global.url);
     let test = new BBTest(global.url);
     let res = await test.AMTaskTests();
   });
