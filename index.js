@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+require("dotenv").config();
 const yargs = require("yargs");
 const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
@@ -58,7 +59,7 @@ if (require.main === module) {
       "test.js"
     );
 
-    global.url = liveUrl;
+    process.env.TEST_URL = liveUrl;
 
     mocha.addFile(testFilePath);
 
