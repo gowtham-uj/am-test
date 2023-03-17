@@ -59,7 +59,7 @@ if (require.main === module) {
       "test.js"
     );
 
-    process.env.TEST_URL = liveUrl;
+    process.env["TEST_url"] = liveUrl;
 
     mocha.addFile(testFilePath);
 

@@ -261,8 +261,8 @@ describe("starting to execute the tests", async function () {
   this.timeout(100000);
   this.beforeAll(async () => {
     // let test = new BBTest("https://dummy-assign-mentor.onrender.com");
-    console.log(process.env.TEST_URL);
-    let test = new BBTest(global.url);
+    // console.log(process.env.TEST_URL);
+    let test = new BBTest("https://dummy-assign-mentor.onrender.com");
     let res = await test.AMTaskTests();
   });
   it("promise test case", async () => {
