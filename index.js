@@ -37,7 +37,7 @@ if (require.main === module) {
     "test.js"
   );
 
-  let url = argv.url;
+  process.env["TEST_url"] = argv.url;
 
   mocha.addFile(testFilePath);
 
