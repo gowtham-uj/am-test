@@ -10,7 +10,6 @@ const sleep = require("sleep-promise");
 
 class BBTest {
   constructor(liveLink) {
-    console.log(liveLink);
     this.liveLink = liveLink;
     this.routeDetails = {};
   }
@@ -257,6 +256,7 @@ class BBTest {
     return { success: true };
   }
 }
+console.log(global.url);
 
 describe("starting to execute the tests", async function () {
   this.timeout(100000);
