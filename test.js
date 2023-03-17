@@ -10,10 +10,7 @@ const sleep = require("sleep-promise");
 
 class BBTest {
   constructor(liveLink) {
-    if (liveLink == null)
-      console.log(
-        "please provide the destination path, that destination folder will be used as temporary place to perform automated tests."
-      );
+    console.log(liveLink);
     this.liveLink = liveLink;
     this.routeDetails = {};
   }
