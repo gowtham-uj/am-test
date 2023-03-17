@@ -263,8 +263,8 @@ describe("starting to execute the tests", async function () {
     // let test = new BBTest("https://dummy-assign-mentor.onrender.com");
     // console.log(process.env.TEST_URL);
     let url = process.env.TEST_URL;
-    console.log(url, typeof url);
-    let test = new BBTest("https://dummy-assign-mentor.onrender.com");
+    console.log(url);
+    let test = new BBTest(`${url}`);
     let res = await test.AMTaskTests();
   });
   it("promise test case", async () => {
