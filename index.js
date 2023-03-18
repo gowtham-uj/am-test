@@ -6,6 +6,7 @@ const argv = yargs(hideBin(process.argv)).argv;
 
 const Mocha = require("mocha");
 const path = require("path");
+const fs = requrie("fs");
 
 // console.log();
 
@@ -87,6 +88,7 @@ function runTests(liveUrl, outputDest) {
 
   const envJson = require("./env.json");
   envJson.TEST_url = liveUrl;
+  fs.writeFileSync("./env.json", JSON.stringify(envJson));
 
   mocha.addFile(testFilePath);
 
