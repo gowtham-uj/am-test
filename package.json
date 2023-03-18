@@ -17,7 +17,6 @@
     "chai": "^4.3.7",
     "dotenv": "^16.0.3",
     "mocha": "^10.2.0",
-    "mocha-simple-html-reporter": "^2.0.0",
     "sleep-promise": "^9.1.0",
     "yargs": "^17.7.1"
   },
