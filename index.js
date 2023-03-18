@@ -73,6 +73,10 @@ const fs = requrie("fs");
 // }
 
 function runTests(liveUrl, outputDest) {
+  const envJson = require("./env.json");
+  envJson.TEST_url = liveUrl;
+  fs.writeFileSync("./env.json", JSON.stringify(envJson));
+
   let mocha = new Mocha({
     reporter: "json",
     reporterOptions: {
@@ -85,10 +89,6 @@ function runTests(liveUrl, outputDest) {
     path.dirname(require.resolve("am-test/package.json")),
     "test.js"
   );
-
-  const envJson = require("./env.json");
-  envJson.TEST_url = liveUrl;
-  fs.writeFileSync("./env.json", JSON.stringify(envJson));
 
   mocha.addFile(testFilePath);
 
