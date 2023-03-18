@@ -85,8 +85,8 @@ function runTests(liveUrl, outputDest) {
     "test.js"
   );
 
-  // console.log(liveUrl);
-  process.env["TEST_url"] = liveUrl;
+  const envJson = require("./env.json");
+  envJson.TEST_url = liveUrl;
 
   mocha.addFile(testFilePath);
 

@@ -262,7 +262,10 @@ describe("starting to execute the tests", async function () {
   this.beforeAll(async () => {
     // let test = new BBTest("https://dummy-assign-mentor.onrender.com");
     // console.log(process.env.TEST_URL);
-    let url = process.env.TEST_URL;
+
+    const envJson = require("./env.json");
+    // envJson.TEST_url
+    let url = envJson.TEST_url;
     console.log(url);
     let test = new BBTest(`${url}`);
     let res = await test.AMTaskTests();
