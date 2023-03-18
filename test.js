@@ -266,6 +266,10 @@ describe("starting to execute the tests", async function () {
     // parse from env variables and store it in variable and use it
     // due to render we cant modify the render the env vars so currently using static value but whne in production we will use the env variables.
     let test = new BBTest(`https://dummy-assign-mentor.onrender.com`);
+
+    if (!!argv.url) {
+      test = new BBTest(`${argv.url}`);
+    }
     let res = await test.AMTaskTests();
   });
   it("promise test case", async () => {
