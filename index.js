@@ -25,7 +25,7 @@ if (require.main === module) {
   // console.log("called directly");
 
   let mocha = new Mocha({
-    reporter: "mocha-simple-html-reporter",
+    reporter: "json",
     reporterOptions: {
       output: doesStoreOut ? path.resolve(argv.outputDest) : null,
     },
@@ -59,7 +59,7 @@ if (require.main === module) {
       "test.js"
     );
 
-    console.log(liveUrl);
+    // console.log(liveUrl);
     process.env["TEST_url"] = liveUrl;
 
     mocha.addFile(testFilePath);
