@@ -9,25 +9,73 @@ const path = require("path");
 
 // console.log();
 
-if (require.main === module) {
-  let doesStoreOut = null;
-  if (!argv.url) {
-    console.log(`please provide the url of the live app to test the app.
-  ex : am-test --url="somexample.com" with no last / of that url`);
-    process.exitCode = 1;
-    process.exit();
-  }
-  if (!argv.outputDest) {
-    doesStoreOut = false;
-  } else if (argv.outputDest) {
-    doesStoreOut = true;
-  }
-  // console.log("called directly");
+// if (require.main === module) {
+//   let doesStoreOut = null;
+//   if (!argv.url) {
+//     console.log(`please provide the url of the live app to test the app.
+//   ex : am-test --url="somexample.com" with no last / of that url`);
+//     process.exitCode = 1;
+//     process.exit();
+//   }
+//   if (!argv.outputDest) {
+//     doesStoreOut = false;
+//   } else if (argv.outputDest) {
+//     doesStoreOut = true;
+//   }
+//   // console.log("called directly");
 
+//   let mocha = new Mocha({
+//     reporter: "json",
+//     reporterOptions: {
+//       output: doesStoreOut ? path.resolve(argv.outputDest) : null,
+//     },
+//   });
+
+//   // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
+//   const testFilePath = path.join(
+//     path.dirname(require.resolve("am-test/package.json")),
+//     "test.js"
+//   );
+
+//   process.env["TEST_url"] = argv.url;
+
+//   mocha.addFile(testFilePath);
+
+//   mocha.run(function (failures) {
+//     process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
+//   });
+// } else {
+//   function runTests(liveUrl, outputDest) {
+//     let mocha = new Mocha({
+//       reporter: "json",
+//       reporterOptions: {
+//         output: outputDest,
+//       },
+//     });
+
+//     // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
+//     const testFilePath = path.join(
+//       path.dirname(require.resolve("am-test/package.json")),
+//       "test.js"
+//     );
+
+//     // console.log(liveUrl);
+//     process.env["TEST_url"] = liveUrl;
+
+//     mocha.addFile(testFilePath);
+
+//     mocha.run(function (failures) {
+//       // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
+//     });
+//   }
+//   module.exports = { runTests };
+// }
+
+function runTests(liveUrl, outputDest) {
   let mocha = new Mocha({
     reporter: "json",
     reporterOptions: {
-      output: doesStoreOut ? path.resolve(argv.outputDest) : null,
+      output: outputDest,
     },
   });
 
@@ -37,39 +85,16 @@ if (require.main === module) {
     "test.js"
   );
 
-  process.env["TEST_url"] = argv.url;
+  // console.log(liveUrl);
+  process.env["TEST_url"] = liveUrl;
 
   mocha.addFile(testFilePath);
 
   mocha.run(function (failures) {
-    process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
+    // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
   });
-} else {
-  function runTests(liveUrl, outputDest) {
-    let mocha = new Mocha({
-      reporter: "json",
-      reporterOptions: {
-        output: outputDest,
-      },
-    });
-
-    // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
-    const testFilePath = path.join(
-      path.dirname(require.resolve("am-test/package.json")),
-      "test.js"
-    );
-
-    // console.log(liveUrl);
-    process.env["TEST_url"] = liveUrl;
-
-    mocha.addFile(testFilePath);
-
-    mocha.run(function (failures) {
-      // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
-    });
-  }
-  module.exports = { runTests };
 }
+module.exports = { runTests };
 
 /*
 running mocha programmatically
