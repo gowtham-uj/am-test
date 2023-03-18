@@ -6,7 +6,7 @@ const argv = yargs(hideBin(process.argv)).argv;
 
 const Mocha = require("mocha");
 const path = require("path");
-const fs = requrie("fs");
+const fs = require("fs");
 
 // console.log();
 
