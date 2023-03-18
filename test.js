@@ -263,11 +263,9 @@ describe("starting to execute the tests", async function () {
     // let test = new BBTest("https://dummy-assign-mentor.onrender.com");
     // console.log(process.env.TEST_URL);
 
-    const envJson = require("./env.json");
-    // envJson.TEST_url
-    let url = envJson.TEST_url;
-    console.log(url);
-    let test = new BBTest(`${url}`);
+    // parse from env variables and store it in variable and use it
+    // due to render we cant modify the render the env vars so currently using static value but whne in production we will use the env variables.
+    let test = new BBTest(`https://dummy-assign-mentor.onrender.com`);
     let res = await test.AMTaskTests();
   });
   it("promise test case", async () => {
