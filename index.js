@@ -47,7 +47,7 @@ if (require.main === module) {
 } else {
   function runTests(liveUrl, outputDest) {
     let mocha = new Mocha({
-      reporter: "mocha-simple-html-reporter",
+      reporter: "json",
       reporterOptions: {
         output: outputDest,
       },
