@@ -4,8 +4,8 @@ const yargs = require("yargs");
 const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
 const url = require("url");
-const puppeteer = require("puppeteer");
 const sleep = require("sleep-promise");
+var html_to_pdf = require("html-pdf-node");
 
 const Mocha = require("mocha");
 const path = require("path");
@@ -84,6 +84,17 @@ if (require.main === module) {
         }
 
         // function that opens up the puppeteer and creates a pdf from that html and save it as pdf.
+        let pathToResHtml = path
+          .resolve(`./mocha-reports/${argv.outputDest}`)
+          .replace(".json", ".html");
+
+        let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
+        let options = {
+          format: "A4",
+          path: "./mocha-reports/Test-Results.pdf",
+        };
+        let file = { url: outHtmlFileDetails.href };
+        let pdfBuffer = await html_to_pdf.generatePdf(file, options);
 
         // delete the prev out file
         try {
@@ -96,30 +107,6 @@ if (require.main === module) {
           process.exitCode = 1;
           process.exit(1);
         }
-        let pathToResHtml = path
-          .resolve(`./mocha-reports/${argv.outputDest}`)
-          .replace(".json", ".html");
-
-        let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto(outHtmlFileDetails.href, {
-          waitUntil: "domcontentloaded",
-        });
-        await sleep(2000).then(async () => {
-          await page.waitForSelector("#details");
-          await page.pdf({
-            path: path.resolve(`./mocha-reports/Test-Results.pdf`),
-            // format: "A4",
-            margin: {
-              top: "20px",
-              left: "20px",
-              right: "20px",
-              bottom: "20px",
-            },
-          });
-          await browser.close();
-        });
       }
     );
 
