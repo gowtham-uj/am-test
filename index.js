@@ -60,8 +60,8 @@ if (require.main === module) {
           // node couldn't execute the command
           console.log(`stdout: ${stdout}`);
           console.log(`stderr: ${stderr}`);
-          return;
         }
+        console.log(path.resolve(`mocha-reports/${argv.outputDest}`));
       }
     );
 
@@ -83,8 +83,6 @@ if (require.main === module) {
       });
       await browser.close();
     };
-
-    console.log(path.resolve(`mocha-reports/${argv.outputDest}`));
 
     // delete the markdown file which has created before
     try {
