@@ -6,6 +6,7 @@ const argv = yargs(hideBin(process.argv)).argv;
 const url = require("url");
 const sleep = require("sleep-promise");
 const htmlToPdf = require("html-to-pdf");
+const puppeteer = require("puppeteer");
 
 const Mocha = require("mocha");
 const path = require("path");
@@ -92,11 +93,6 @@ if (require.main === module) {
         await page.goto(outHtmlFileDetails.href, {
           waitUntil: "domcontentloaded",
         });
-        // await page.waitForNavigation({
-        //   waitUntil: "networkidle0",
-        // });
-
-        // await page.waitFor(200);
 
         await page.pdf({
           path: path.resolve(`./mocha-reports/Test-Results.pdf`),
