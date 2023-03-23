@@ -92,7 +92,7 @@ if (require.main === module) {
           headless: true,
           devtools: false,
           defaultViewport: {
-            width: 900,
+            width: 1500,
             height: 1440,
             deviceScaleFactor: 2,
           },
@@ -109,10 +109,6 @@ if (require.main === module) {
           waitUntil: "domcontentloaded",
         });
         await sleep(1000);
-        const height_weight_ratio = await page.evaluate(
-          () => window.innerHeight / window.innerWidth
-        );
-        const height = parseInt("4.8cm") * height_weight_ratio;
 
         await page.pdf({
           path: path.resolve(`./mocha-reports/Test-Results.pdf`),
@@ -122,8 +118,6 @@ if (require.main === module) {
             right: "20px",
             bottom: "20px",
           },
-          width: "4.8cm",
-          height: height,
           printBackground: true,
         });
         await browser.close();
