@@ -109,7 +109,7 @@ if (require.main === module) {
             bottom: "20px",
           },
           // width: "98vw",
-          // height: "200vh",
+          height: "300vh",
           printBackground: true,
         });
         await browser.close();
