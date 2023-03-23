@@ -106,20 +106,19 @@ if (require.main === module) {
         await page.goto(outHtmlFileDetails.href, {
           waitUntil: "domcontentloaded",
         });
-        await sleep(2000);
-
-        await page.waitFor("*");
-        await page.pdf({
-          path: path.resolve(`./mocha-reports/Test-Results.pdf`),
-          format: "A4",
-          margin: {
-            top: "20px",
-            left: "20px",
-            right: "20px",
-            bottom: "20px",
-          },
+        await sleep(200).then(async () => {
+          await page.pdf({
+            path: path.resolve(`./mocha-reports/Test-Results.pdf`),
+            format: "A4",
+            margin: {
+              top: "20px",
+              left: "20px",
+              right: "20px",
+              bottom: "20px",
+            },
+          });
+          await browser.close();
         });
-        await browser.close();
       }
     );
 
