@@ -101,7 +101,22 @@ if (require.main === module) {
 
         let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
         console.log(outHtmlFileDetails);
-        await convertToPdf(outHtmlFileDetails.href);
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        console.log("hello here ");
+        await page.goto(outHtmlFileDetails.href);
+
+        await page.pdf({
+          path: path.resolve(`./mocha-reports/Test Results.pdf`),
+          format: "A4",
+          margin: {
+            top: "20px",
+            left: "20px",
+            right: "20px",
+            bottom: "20px",
+          },
+        });
+        await browser.close();
       }
     );
 
