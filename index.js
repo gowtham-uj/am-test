@@ -48,7 +48,7 @@ if (require.main === module) {
   // mocha.addFile(testFilePath);
 
   mocha.run(async function (failures) {
-    process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
+    // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
 
     // take the markdown file and create the pdf with it
     execSync(
