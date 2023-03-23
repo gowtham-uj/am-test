@@ -90,9 +90,15 @@ if (require.main === module) {
         let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
+        await page.setViewport({
+          width: 1440,
+          height: 900,
+          deviceScaleFactor: 2,
+        });
         await page.goto(outHtmlFileDetails.href, {
           waitUntil: "domcontentloaded",
         });
+        await sleep(200);
 
         await page.pdf({
           path: path.resolve(`./mocha-reports/Test-Results.pdf`),
