@@ -63,11 +63,32 @@ if (require.main === module) {
           // console.log(`stderr: ${stderr}`);
         }
 
-        console.log(
-          path
-            .resolve(`./mocha-reports/${argv.outputDest}`)
-            .replace(".json", ".html")
-        );
+        let pathToResHtml = path
+          .resolve(`./mocha-reports/${argv.outputDest}`)
+          .replace(".json", ".html");
+
+          // function that opens up the puppeteer and creates a pdf from that html and save it as pdf.
+        let convertToPdf = async (fileUrl) => {
+          const browser = await puppeteer.launch();
+          const page = await browser.newPage();
+          await page.goto(fileUrl);
+          await page.pdf({
+            path: path.resolve(`./mocha-reports/Test Results.pdf`),
+            format: "A4",
+            margin: {
+              top: "20px",
+              left: "20px",
+              right: "20px",
+              bottom: "20px",
+            },
+          });
+          await browser.close();
+        };
+
+        let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
+
+        await convertToPdf(outHtmlFileDetails.href)
+
 
         // delete the prev out file
         try {
@@ -85,23 +106,6 @@ if (require.main === module) {
     );
 
     // spin up the headless chrome with puppeteer and convert the html to pdf file and save it.
-
-    let convertToPdf = async () => {
-      const browser = await puppeteer.launch();
-      const page = await browser.newPage();
-      await page.goto("");
-      await page.pdf({
-        path: "test.pdf",
-        format: "A4",
-        margin: {
-          top: "20px",
-          left: "20px",
-          right: "20px",
-          bottom: "20px",
-        },
-      });
-      await browser.close();
-    };
 
     // delete the markdown file which has created before
   });
