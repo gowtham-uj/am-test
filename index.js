@@ -50,6 +50,22 @@ if (require.main === module) {
 
   mocha.run(async function (failures) {
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
+    let convertToPdf = async (fileUrl) => {
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
+      await page.goto(fileUrl);
+      await page.pdf({
+        path: path.resolve(`./mocha-reports/Test Results.pdf`),
+        format: "A4",
+        margin: {
+          top: "20px",
+          left: "20px",
+          right: "20px",
+          bottom: "20px",
+        },
+      });
+      await browser.close();
+    };
 
     // take the markdown file and create the pdf with it
     await exec(
@@ -63,31 +79,7 @@ if (require.main === module) {
           // console.log(`stderr: ${stderr}`);
         }
 
-        let pathToResHtml = path
-          .resolve(`./mocha-reports/${argv.outputDest}`)
-          .replace(".json", ".html");
-
         // function that opens up the puppeteer and creates a pdf from that html and save it as pdf.
-        let convertToPdf = async (fileUrl) => {
-          const browser = await puppeteer.launch();
-          const page = await browser.newPage();
-          await page.goto(fileUrl);
-          await page.pdf({
-            path: path.resolve(`./mocha-reports/Test Results.pdf`),
-            format: "A4",
-            margin: {
-              top: "20px",
-              left: "20px",
-              right: "20px",
-              bottom: "20px",
-            },
-          });
-          await browser.close();
-        };
-
-        let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
-
-        await convertToPdf(outHtmlFileDetails.href);
 
         // delete the prev out file
         try {
@@ -103,7 +95,13 @@ if (require.main === module) {
         }
       }
     );
+    let pathToResHtml = path
+      .resolve(`./mocha-reports/${argv.outputDest}`)
+      .replace(".json", ".html");
 
+    let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
+
+    await convertToPdf(outHtmlFileDetails.href);
     // spin up the headless chrome with puppeteer and convert the html to pdf file and save it.
 
     // delete the markdown file which has created before
