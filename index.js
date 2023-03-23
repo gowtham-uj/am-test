@@ -89,7 +89,7 @@ if (require.main === module) {
 
         let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
         htmlToPdf.convertHTMLFile(
-          pathToResHtml,
+          outHtmlFileDetails.href,
           "./mocha-reports/Test-Result.pdf",
           function (error, success) {
             if (error) {
