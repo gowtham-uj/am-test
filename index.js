@@ -8,7 +8,7 @@ var url = require("url");
 const Mocha = require("mocha");
 const path = require("path");
 const fs = require("fs");
-const { execSync } = require("child_process");
+const { exec } = require("child_process");
 
 // console.log();
 
@@ -51,7 +51,7 @@ if (require.main === module) {
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
 
     // take the markdown file and create the pdf with it
-    execSync(
+    await exec(
       `npx mochawesome-report-generator marge -i true -o "mocha-reports/" ${path.resolve(
         argv.outputDest
       )}`,
@@ -61,6 +61,7 @@ if (require.main === module) {
           console.log(`stdout: ${stdout}`);
           console.log(`stderr: ${stderr}`);
         }
+        console.log("hello");
         try {
           fs.accessSync(path.resolve(argv.outputDest));
           fs.unlinkSync(path.resolve(argv.outputDest));
@@ -96,7 +97,6 @@ if (require.main === module) {
 
     // delete the markdown file which has created before
   });
-  console.log("hello");
 } else {
   function runTests(liveUrl, outputDest) {
     let mocha = new Mocha({
