@@ -83,32 +83,37 @@ if (require.main === module) {
         }
 
         // function that opens up the puppeteer and creates a pdf from that html and save it as pdf.
+        const docHeight = () => {
+          const body = document.body;
+          const html = document.documentElement;
+          return Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.clientHeight,
+            html.scrollHeight,
+            html.offsetHeight
+          );
+        };
+
         let pathToResHtml = path
           .resolve(`./mocha-reports/${argv.outputDest}`)
           .replace(".json", ".html");
 
         let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
-        const browser = await puppeteer.launch({
-          headless: true,
-          devtools: false,
-          defaultViewport: {
-            width: 1500,
-            height: 1440,
-            deviceScaleFactor: 2,
-          },
-        });
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        await page.emulateMedia("screen");
+        // await page.emulateMedia("screen");
 
-        // await page.setViewport({
-        //   width: 1440,
-        //   height: 900,
-        //   deviceScaleFactor: 2,
-        // });
         await page.goto(outHtmlFileDetails.href, {
           waitUntil: "domcontentloaded",
         });
+        await page.setViewport({
+          width: 1440,
+          height: 900,
+          deviceScaleFactor: 2,
+        });
         await sleep(1000);
+        const height = await page.evaluate(docHeight);
 
         await page.pdf({
           path: path.resolve(`./mocha-reports/Test-Results.pdf`),
@@ -119,6 +124,7 @@ if (require.main === module) {
             bottom: "20px",
           },
           printBackground: true,
+          height: `${height}px`,
         });
         await browser.close();
 
