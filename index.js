@@ -55,7 +55,6 @@ if (require.main === module) {
     let convertToPdf = async (fileUrl) => {
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
-      console.log("hello here ");
       await page.goto(fileUrl);
 
       await page.pdf({
@@ -87,20 +86,29 @@ if (require.main === module) {
           .resolve(`./mocha-reports/${argv.outputDest}`)
           .replace(".json", ".html");
 
-        // let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
-        // htmlToPdf.convertHTMLFile(
-        //   pathToResHtml,
-        //   "./mocha-reports/Test-Result.pdf",
-        //   function (error, success) {
-        //     if (error) {
-        //       console.log("Oh noes! Errorz!");
-        //       console.log(error);
-        //     } else {
-        //       console.log("Woot! Success!");
-        //       console.log(success);
-        //     }
-        //   }
-        // );
+        let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.goto(outHtmlFileDetails.href, {
+          waitUntil: "networkidle0",
+        });
+        await page.waitForNavigation({
+          waitUntil: "networkidle0",
+        });
+
+        await page.waitFor(2000);
+
+        await page.pdf({
+          path: path.resolve(`./mocha-reports/Test Results.pdf`),
+          margin: {
+            top: "20px",
+            left: "20px",
+            right: "20px",
+            bottom: "20px",
+          },
+          printBackground: true,
+        });
+        await browser.close();
 
         // delete the prev out file
         try {
