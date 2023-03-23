@@ -54,6 +54,7 @@ if (require.main === module) {
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
       await page.goto(fileUrl);
+      console.log("hello here ");
       await page.pdf({
         path: path.resolve(`./mocha-reports/Test Results.pdf`),
         format: "A4",
@@ -93,15 +94,16 @@ if (require.main === module) {
           process.exitCode = 1;
           process.exit(1);
         }
+        let pathToResHtml = path
+          .resolve(`./mocha-reports/${argv.outputDest}`)
+          .replace(".json", ".html");
+
+        let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
+        console.log(outHtmlFileDetails);
+        await convertToPdf(outHtmlFileDetails.href);
       }
     );
-    let pathToResHtml = path
-      .resolve(`./mocha-reports/${argv.outputDest}`)
-      .replace(".json", ".html");
 
-    let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
-
-    await convertToPdf(outHtmlFileDetails.href);
     // spin up the headless chrome with puppeteer and convert the html to pdf file and save it.
 
     // delete the markdown file which has created before
