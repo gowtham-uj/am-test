@@ -89,7 +89,7 @@ if (require.main === module) {
         let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        await page.goto(outHtmlFileDetails.href, {
+        await page.goto(pathToResHtml, {
           waitUntil: "networkidle0",
         });
         await page.waitForNavigation({
