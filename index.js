@@ -29,17 +29,23 @@ if (require.main === module) {
     doesStoreOut = false;
   }
   // console.log("called directly");
-
-  let mocha = new Mocha({
-    reporter: "mochawesome",
-    reporterOptions: {
-      reportFilename: doesStoreOut ? path.resolve("./Test-Results.json") : null,
-      quiet: true,
-      json: true,
-      html: false,
-      reportTitle: "Test Results",
-    },
-  });
+  let mocha;
+  if (doesStoreOut === true) {
+    mocha = new Mocha({
+      reporter: "mochawesome",
+      reporterOptions: {
+        reportFilename: doesStoreOut
+          ? path.resolve("./Test-Results.json")
+          : null,
+        quiet: true,
+        json: true,
+        html: false,
+        reportTitle: "Test Results",
+      },
+    });
+  } else if (doesStoreOut === false) {
+    mocha = new Mocha();
+  }
 
   // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
   const testFilePath = path.join(
@@ -53,7 +59,7 @@ if (require.main === module) {
 
   mocha.run(async function (failures) {
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
-    if (argv.saveOutput == "false") return;
+    if (doesStoreOut === false) return;
 
     // take the markdown file and create the pdf with it
     await exec(
