@@ -88,17 +88,31 @@ if (require.main === module) {
           .replace(".json", ".html");
 
         let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.setViewport({
-          width: 1440,
-          height: 900,
-          deviceScaleFactor: 2,
+        const browser = await puppeteer.launch({
+          headless: true,
+          devtools: false,
+          defaultViewport: {
+            width: 900,
+            height: 1440,
+            deviceScaleFactor: 2,
+          },
         });
+        const page = await browser.newPage();
+        await page.emulateMedia("screen");
+
+        // await page.setViewport({
+        //   width: 1440,
+        //   height: 900,
+        //   deviceScaleFactor: 2,
+        // });
         await page.goto(outHtmlFileDetails.href, {
           waitUntil: "domcontentloaded",
         });
         await sleep(1000);
+        const height_weight_ratio = await page.evaluate(
+          () => window.innerHeight / window.innerWidth
+        );
+        const height = parseInt("4.8cm") * height_weight_ratio;
 
         await page.pdf({
           path: path.resolve(`./mocha-reports/Test-Results.pdf`),
@@ -108,8 +122,8 @@ if (require.main === module) {
             right: "20px",
             bottom: "20px",
           },
-          // width: "98vw",
-          height: "300vh",
+          width: "4.8cm",
+          height: height,
           printBackground: true,
         });
         await browser.close();
