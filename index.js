@@ -5,6 +5,7 @@ const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
 const url = require("url");
 const puppeteer = require("puppeteer");
+const sleep = require("sleep-promise");
 
 const Mocha = require("mocha");
 const path = require("path");
@@ -105,6 +106,7 @@ if (require.main === module) {
         await page.goto(outHtmlFileDetails.href, {
           waitUntil: "domcontentloaded",
         });
+        await sleep(2000);
 
         await page.waitFor("*");
         await page.pdf({
