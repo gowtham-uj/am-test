@@ -98,7 +98,7 @@ if (require.main === module) {
         await page.goto(outHtmlFileDetails.href, {
           waitUntil: "domcontentloaded",
         });
-        await sleep(200);
+        await sleep(1000);
 
         await page.pdf({
           path: path.resolve(`./mocha-reports/Test-Results.pdf`),
