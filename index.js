@@ -87,20 +87,20 @@ if (require.main === module) {
           .resolve(`./mocha-reports/${argv.outputDest}`)
           .replace(".json", ".html");
 
-        let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
-        htmlToPdf.convertHTMLFile(
-          pathToResHtml,
-          "./mocha-reports/Test-Result.pdf",
-          function (error, success) {
-            if (error) {
-              console.log("Oh noes! Errorz!");
-              console.log(error);
-            } else {
-              console.log("Woot! Success!");
-              console.log(success);
-            }
-          }
-        );
+        // let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
+        // htmlToPdf.convertHTMLFile(
+        //   pathToResHtml,
+        //   "./mocha-reports/Test-Result.pdf",
+        //   function (error, success) {
+        //     if (error) {
+        //       console.log("Oh noes! Errorz!");
+        //       console.log(error);
+        //     } else {
+        //       console.log("Woot! Success!");
+        //       console.log(success);
+        //     }
+        //   }
+        // );
 
         // delete the prev out file
         try {
