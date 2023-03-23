@@ -121,7 +121,7 @@ if (require.main === module) {
         // delete the prev out file
         try {
           fs.accessSync(path.resolve("./Test-Results.json"));
-          fs.unlinkSync(path.resolve("./Test-results.json"));
+          fs.unlinkSync(path.resolve("./Test-Results.json"));
         } catch (err) {
           console.log(
             "something went wrong please re check your inputs and run the tool again."
