@@ -106,6 +106,7 @@ if (require.main === module) {
           waitUntil: "domcontentloaded",
         });
 
+        await page.waitFor("*");
         await page.pdf({
           path: path.resolve(`./mocha-reports/Test-Results.pdf`),
           format: "A4",
