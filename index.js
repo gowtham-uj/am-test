@@ -107,9 +107,10 @@ if (require.main === module) {
           waitUntil: "domcontentloaded",
         });
         await sleep(2000).then(async () => {
+          await page.waitForSelector("#details");
           await page.pdf({
             path: path.resolve(`./mocha-reports/Test-Results.pdf`),
-            format: "A4",
+            // format: "A4",
             margin: {
               top: "20px",
               left: "20px",
