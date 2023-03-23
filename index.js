@@ -45,7 +45,7 @@ if (require.main === module) {
 
   // process.env["TEST_url"] = argv.url;
 
-  // mocha.addFile(testFilePath);
+  mocha.addFile(testFilePath);
 
   mocha.run(async function (failures) {
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
