@@ -63,7 +63,7 @@ if (require.main === module) {
           // console.log(`stderr: ${stderr}`);
         }
 
-        console.log(path.resolve(`${argv.outputDest}`));
+        console.log(path.resolve(`./mocha-reports/${argv.outputDest}`));
 
         // delete the prev out file
         try {
