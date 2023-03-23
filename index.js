@@ -5,7 +5,6 @@ const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
 const url = require("url");
 const sleep = require("sleep-promise");
-const htmlToPdf = require("html-to-pdf");
 const puppeteer = require("puppeteer");
 
 const Mocha = require("mocha");
