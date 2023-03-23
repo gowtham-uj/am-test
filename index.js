@@ -34,6 +34,7 @@ if (require.main === module) {
       quiet: true,
       json: true,
       html: false,
+      reportTitle: "Test Results",
     },
   });
 
@@ -52,7 +53,7 @@ if (require.main === module) {
 
     // take the markdown file and create the pdf with it
     await exec(
-      `npx mochawesome-report-generator marge -i true -o "mocha-reports/" ${path.resolve(
+      `npx mochawesome-report-generator marge -i true -o "mocha-reports/" --charts true ${path.resolve(
         argv.outputDest
       )}`,
       (err, stdout, stderr) => {
@@ -60,18 +61,6 @@ if (require.main === module) {
           // node couldn't execute the command
           console.log(`stdout: ${stdout}`);
           console.log(`stderr: ${stderr}`);
-        }
-        console.log("hello");
-        try {
-          fs.accessSync(path.resolve(argv.outputDest));
-          fs.unlinkSync(path.resolve(argv.outputDest));
-          console.log("file deleted!!");
-        } catch (err) {
-          console.log(
-            "something went wrong please re check your inputs and run the tool again."
-          );
-          process.exitCode = 1;
-          process.exit(1);
         }
       }
     );
@@ -94,6 +83,18 @@ if (require.main === module) {
       });
       await browser.close();
     };
+
+    try {
+      fs.accessSync(path.resolve(argv.outputDest));
+      fs.unlinkSync(path.resolve(argv.outputDest));
+      console.log("file deleted!!");
+    } catch (err) {
+      console.log(
+        "something went wrong please re check your inputs and run the tool again."
+      );
+      process.exitCode = 1;
+      process.exit(1);
+    }
 
     // delete the markdown file which has created before
   });
