@@ -56,7 +56,7 @@ if (require.main === module) {
       `npx mochawesome-report-generator marge -i true -o "mocha-reports/" --charts true ${path.resolve(
         argv.outputDest
       )}`,
-      (err, stdout, stderr) => {
+      async (err, stdout, stderr) => {
         if (err) {
           // node couldn't execute the command
           // console.log(`stdout: ${stdout}`);
@@ -67,7 +67,7 @@ if (require.main === module) {
           .resolve(`./mocha-reports/${argv.outputDest}`)
           .replace(".json", ".html");
 
-          // function that opens up the puppeteer and creates a pdf from that html and save it as pdf.
+        // function that opens up the puppeteer and creates a pdf from that html and save it as pdf.
         let convertToPdf = async (fileUrl) => {
           const browser = await puppeteer.launch();
           const page = await browser.newPage();
@@ -87,8 +87,7 @@ if (require.main === module) {
 
         let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
 
-        await convertToPdf(outHtmlFileDetails.href)
-
+        await convertToPdf(outHtmlFileDetails.href);
 
         // delete the prev out file
         try {
