@@ -23,10 +23,10 @@ if (require.main === module) {
     process.exitCode = 1;
     process.exit();
   }
-  if (argv.saveOutput === "true") {
-    doesStoreOut = false;
-  } else if (argv.saveOutput === "false") {
+  if (argv.saveOutput == "true") {
     doesStoreOut = true;
+  } else if (argv.saveOutput == "false") {
+    doesStoreOut = false;
   }
   // console.log("called directly");
 
