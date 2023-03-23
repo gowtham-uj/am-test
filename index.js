@@ -48,18 +48,21 @@ if (require.main === module) {
   mocha.run(function (failures) {
     process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
 
+    // delete the markdown file which has created before
     try {
       fs.accessSync(path.resolve(argv.outputDest));
-      console.log("file has been created");
+      fs.unlinkSync(path.resolve(argv.outputDest));
+      console.log("file deleted!!");
     } catch (err) {
-      console.log("file has not been created yet!!");
-      console.error(err);
+      console.log(
+        "something went wrong please re check your inputs and run the tool again."
+      );
+      process.exitCode = 1;
+      process.exit(1);
     }
   });
 
   // take the markdown file and create the pdf with it
-
-  // delete the markdown file which has created before
 } else {
   function runTests(liveUrl, outputDest) {
     let mocha = new Mocha({
@@ -86,34 +89,3 @@ if (require.main === module) {
   }
   module.exports = { runTests };
 }
-
-// function runTests(liveUrl, outputDest) {
-//   const envJson = require("./env.json");
-//   envJson.TEST_url = liveUrl;
-//   fs.writeFileSync("./env.json", JSON.stringify(envJson));
-
-//   let mocha = new Mocha({
-//     reporter: "json",
-//     reporterOptions: {
-//       output: outputDest,
-//     },
-//   });
-
-//   // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
-//   const testFilePath = path.join(
-//     path.dirname(require.resolve("am-test/package.json")),
-//     "test.js"
-//   );
-
-//   mocha.addFile(testFilePath);
-
-//   mocha.run(function (failures) {
-//     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
-//   });
-// }
-// module.exports = { runTests };
-
-/*
-running mocha programmatically
-https://github.com/mochajs/mocha/wiki/Using-mocha-programmatically
-*/
