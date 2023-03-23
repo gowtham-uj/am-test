@@ -53,8 +53,9 @@ if (require.main === module) {
     let convertToPdf = async (fileUrl) => {
       const browser = await puppeteer.launch();
       const page = await browser.newPage();
-      await page.goto(fileUrl);
       console.log("hello here ");
+      await page.goto(fileUrl);
+
       await page.pdf({
         path: path.resolve(`./mocha-reports/Test Results.pdf`),
         format: "A4",
