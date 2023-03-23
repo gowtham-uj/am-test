@@ -62,7 +62,17 @@ if (require.main === module) {
           console.log(`stdout: ${stdout}`);
           console.log(`stderr: ${stderr}`);
         }
-        console.log(path.resolve(`mocha-reports/${argv.outputDest}`));
+        try {
+          fs.accessSync(path.resolve(argv.outputDest));
+          fs.unlinkSync(path.resolve(argv.outputDest));
+          console.log("file deleted!!");
+        } catch (err) {
+          console.log(
+            "something went wrong please re check your inputs and run the tool again."
+          );
+          process.exitCode = 1;
+          process.exit(1);
+        }
       }
     );
 
@@ -86,17 +96,6 @@ if (require.main === module) {
     };
 
     // delete the markdown file which has created before
-    try {
-      fs.accessSync(path.resolve(argv.outputDest));
-      fs.unlinkSync(path.resolve(argv.outputDest));
-      console.log("file deleted!!");
-    } catch (err) {
-      console.log(
-        "something went wrong please re check your inputs and run the tool again."
-      );
-      process.exitCode = 1;
-      process.exit(1);
-    }
   });
 } else {
   function runTests(liveUrl, outputDest) {
