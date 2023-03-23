@@ -50,14 +50,17 @@ if (require.main === module) {
     process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
 
     // take the markdown file and create the pdf with it
-    execSync(`npx mochawesome-report-generator .`, (err, stdout, stderr) => {
-      if (err) {
-        // node couldn't execute the command
-        console.log(`stdout: ${stdout}`);
-        console.log(`stderr: ${stderr}`);
-        return;
+    execSync(
+      `npx mochawesome-report-generator marge ${path.resolve(argv.outputDest)}`,
+      (err, stdout, stderr) => {
+        if (err) {
+          // node couldn't execute the command
+          console.log(`stdout: ${stdout}`);
+          console.log(`stderr: ${stderr}`);
+          return;
+        }
       }
-    });
+    );
 
     // delete the markdown file which has created before
     try {
