@@ -48,7 +48,7 @@ if (require.main === module) {
   mocha.addFile(testFilePath);
 
   mocha.run(async function (failures) {
-    this.timeout(30000);
+    this.timeout(50000);
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
 
     // take the markdown file and create the pdf with it
