@@ -28,7 +28,10 @@ if (require.main === module) {
   let mocha = new Mocha({
     reporter: "mochawesome",
     reporterOptions: {
-      output: doesStoreOut ? path.resolve(argv.outputDest) : null,
+      reportFilename: doesStoreOut ? path.resolve(argv.outputDest) : null,
+      quiet: true,
+      json: true,
+      html: false,
     },
   });
 
