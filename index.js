@@ -26,7 +26,7 @@ if (require.main === module) {
   // console.log("called directly");
 
   let mocha = new Mocha({
-    reporter: "markdown",
+    reporter: "mochawesome",
     reporterOptions: {
       output: doesStoreOut ? path.resolve(argv.outputDest) : null,
     },
@@ -44,19 +44,19 @@ if (require.main === module) {
 
   mocha.run(function (failures) {
     process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
+
+    try {
+      fs.accessSync(path.resolve(argv.outputDest));
+      console.log("file has been created");
+    } catch (err) {
+      console.log("file has not been created yet!!");
+      console.error(err);
+    }
   });
 
   // take the markdown file and create the pdf with it
 
   // delete the markdown file which has created before
-
-  try {
-    fs.accessSync(path.resolve(argv.outputDest));
-    console.log("file has been created");
-  } catch (err) {
-    console.log("file has not been created yet!!");
-    console.error(err);
-  }
 } else {
   function runTests(liveUrl, outputDest) {
     let mocha = new Mocha({
