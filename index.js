@@ -96,10 +96,10 @@ if (require.main === module) {
           waitUntil: "networkidle0",
         });
 
-        await page.waitFor(2000);
+        // await page.waitFor(2000);
 
         await page.pdf({
-          path: path.resolve(`./mocha-reports/Test Results.pdf`),
+          path: path.resolve(`./mocha-reports/Test-Results.pdf`),
           margin: {
             top: "20px",
             left: "20px",
