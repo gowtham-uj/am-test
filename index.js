@@ -51,7 +51,9 @@ if (require.main === module) {
 
     // take the markdown file and create the pdf with it
     execSync(
-      `npx mochawesome-report-generator marge ${path.resolve(argv.outputDest)}`,
+      `npx mochawesome-report-generator marge -i true ${path.resolve(
+        argv.outputDest
+      )}`,
       (err, stdout, stderr) => {
         if (err) {
           // node couldn't execute the command
