@@ -102,6 +102,8 @@ if (require.main === module) {
             right: "20px",
             bottom: "20px",
           },
+          width: "98vw",
+          height: "200vh",
           printBackground: true,
         });
         await browser.close();
