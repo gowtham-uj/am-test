@@ -88,7 +88,6 @@ if (require.main === module) {
         try {
           fs.accessSync(path.resolve(argv.outputDest));
           fs.unlinkSync(path.resolve(argv.outputDest));
-          console.log("file deleted!!");
         } catch (err) {
           console.log(
             "something went wrong please re check your inputs and run the tool again."
@@ -103,11 +102,12 @@ if (require.main === module) {
         let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        console.log("hello here ");
-        await page.goto(outHtmlFileDetails.href);
+        await page.goto(outHtmlFileDetails.href, {
+          waitUntil: "domcontentloaded",
+        });
 
         await page.pdf({
-          path: path.resolve(`./mocha-reports/Test Results.pdf`),
+          path: path.resolve(`./mocha-reports/Test-Results.pdf`),
           format: "A4",
           margin: {
             top: "20px",
