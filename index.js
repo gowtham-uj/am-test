@@ -114,7 +114,7 @@ if (require.main === module) {
           },
           printBackground: true,
           width: "1080px",
-          height: `${height * 2}px`,
+          height: `${height + 200}px`,
         });
         await browser.close();
 
