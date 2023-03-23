@@ -101,11 +101,6 @@ if (require.main === module) {
           deviceScaleFactor: 2,
         });
         await sleep(1000);
-        const removeHeader = await page.evaluate(() => {
-          const headerComp =
-            document.body.querySelector("#details").previousElementSibling;
-          headerComp.innerHTML = "";
-        });
         const height = await page.evaluate(docHeight);
 
         await page.pdf({
