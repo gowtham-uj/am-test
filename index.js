@@ -5,7 +5,7 @@ const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
 const url = require("url");
 const sleep = require("sleep-promise");
-var html_to_pdf = require("html-pdf-node");
+const htmlToPdf = require("html-to-pdf");
 
 const Mocha = require("mocha");
 const path = require("path");
@@ -60,7 +60,6 @@ if (require.main === module) {
 
       await page.pdf({
         path: path.resolve(`./mocha-reports/Test Results.pdf`),
-        format: "A4",
         margin: {
           top: "20px",
           left: "20px",
@@ -89,12 +88,19 @@ if (require.main === module) {
           .replace(".json", ".html");
 
         let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
-        let options = {
-          format: "A4",
-          path: "./mocha-reports/Test-Results.pdf",
-        };
-        let file = { url: outHtmlFileDetails.href };
-        let pdfBuffer = await html_to_pdf.generatePdf(file, options);
+        htmlToPdf.convertHTMLFile(
+          pathToResHtml,
+          "./mocha-reports/Test-Result.pdf",
+          function (error, success) {
+            if (error) {
+              console.log("Oh noes! Errorz!");
+              console.log(error);
+            } else {
+              console.log("Woot! Success!");
+              console.log(success);
+            }
+          }
+        );
 
         // delete the prev out file
         try {
