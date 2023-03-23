@@ -23,9 +23,9 @@ if (require.main === module) {
     process.exitCode = 1;
     process.exit();
   }
-  if (!argv.outputDest) {
+  if (argv.saveOutput === "true") {
     doesStoreOut = false;
-  } else if (argv.outputDest) {
+  } else if (argv.saveOutput === "false") {
     doesStoreOut = true;
   }
   // console.log("called directly");
@@ -33,7 +33,7 @@ if (require.main === module) {
   let mocha = new Mocha({
     reporter: "mochawesome",
     reporterOptions: {
-      reportFilename: doesStoreOut ? path.resolve(argv.outputDest) : null,
+      reportFilename: doesStoreOut ? path.resolve("./Test-Results.json") : null,
       quiet: true,
       json: true,
       html: false,
@@ -53,27 +53,12 @@ if (require.main === module) {
 
   mocha.run(async function (failures) {
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
-    let convertToPdf = async (fileUrl) => {
-      const browser = await puppeteer.launch();
-      const page = await browser.newPage();
-      await page.goto(fileUrl);
-
-      await page.pdf({
-        path: path.resolve(`./mocha-reports/Test Results.pdf`),
-        margin: {
-          top: "20px",
-          left: "20px",
-          right: "20px",
-          bottom: "20px",
-        },
-      });
-      await browser.close();
-    };
+    if (doesStoreOut === false) return;
 
     // take the markdown file and create the pdf with it
     await exec(
       `npx mochawesome-report-generator marge -i true -o "mocha-reports/" --charts true ${path.resolve(
-        argv.outputDest
+        "./Test-Results.json"
       )}`,
       async (err, stdout, stderr) => {
         if (err) {
@@ -95,9 +80,7 @@ if (require.main === module) {
           );
         };
 
-        let pathToResHtml = path
-          .resolve(`./mocha-reports/${argv.outputDest}`)
-          .replace(".json", ".html");
+        let pathToResHtml = path.resolve(`./mocha-reports/Test-Results.html`);
 
         let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
         const browser = await puppeteer.launch();
@@ -131,8 +114,8 @@ if (require.main === module) {
 
         // delete the prev out file
         try {
-          fs.accessSync(path.resolve(argv.outputDest));
-          fs.unlinkSync(path.resolve(argv.outputDest));
+          fs.accessSync(path.resolve("./Test-Results.json"));
+          fs.unlinkSync(path.resolve("./Test-results.json"));
         } catch (err) {
           console.log(
             "something went wrong please re check your inputs and run the tool again."
