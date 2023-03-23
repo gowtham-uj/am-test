@@ -53,7 +53,7 @@ if (require.main === module) {
 
   mocha.run(async function (failures) {
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
-    if (doesStoreOut === false) return;
+    if (doesStoreOut == "false") return;
 
     // take the markdown file and create the pdf with it
     await exec(
