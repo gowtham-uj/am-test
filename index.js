@@ -3,7 +3,8 @@ require("dotenv").config();
 const yargs = require("yargs");
 const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
-var url = require("url");
+const url = require("url");
+const puppeteer = require("puppeteer");
 
 const Mocha = require("mocha");
 const path = require("path");
@@ -100,7 +101,6 @@ if (require.main === module) {
           .replace(".json", ".html");
 
         let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
-        console.log(outHtmlFileDetails);
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         console.log("hello here ");
