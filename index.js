@@ -7,6 +7,7 @@ const argv = yargs(hideBin(process.argv)).argv;
 const Mocha = require("mocha");
 const path = require("path");
 const fs = require("fs");
+const { exec } = require("child_process");
 
 // console.log();
 
@@ -56,7 +57,6 @@ if (require.main === module) {
         console.log(`stderr: ${stderr}`);
         return;
       }
-      res.status(200).json({ success: true, testId: testId });
     });
 
     // delete the markdown file which has created before
