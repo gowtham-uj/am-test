@@ -90,13 +90,13 @@ if (require.main === module) {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto(outHtmlFileDetails.href, {
-          waitUntil: "networkidle0",
+          waitUntil: "domcontentloaded",
         });
         // await page.waitForNavigation({
         //   waitUntil: "networkidle0",
         // });
 
-        await page.waitFor(2000);
+        // await page.waitFor(200);
 
         await page.pdf({
           path: path.resolve(`./mocha-reports/Test-Results.pdf`),
