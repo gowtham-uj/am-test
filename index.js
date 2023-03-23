@@ -3,6 +3,7 @@ require("dotenv").config();
 const yargs = require("yargs");
 const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
+var url = require("url");
 
 const Mocha = require("mocha");
 const path = require("path");
@@ -46,7 +47,7 @@ if (require.main === module) {
 
   mocha.addFile(testFilePath);
 
-  mocha.run(function (failures) {
+  mocha.run(async function (failures) {
     process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
 
     // take the markdown file and create the pdf with it
@@ -63,6 +64,27 @@ if (require.main === module) {
         }
       }
     );
+
+    // spin up the headless chrome with puppeteer and convert the html to pdf file and save it.
+
+    let convertToPdf = async () => {
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
+      await page.goto("");
+      await page.pdf({
+        path: "test.pdf",
+        format: "A4",
+        margin: {
+          top: "20px",
+          left: "20px",
+          right: "20px",
+          bottom: "20px",
+        },
+      });
+      await browser.close();
+    };
+
+    console.log(path.resolve(`mocha-reports/${argv.outputDest}`));
 
     // delete the markdown file which has created before
     try {
