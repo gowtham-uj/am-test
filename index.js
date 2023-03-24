@@ -151,3 +151,7 @@ if (require.main === module) {
   }
   module.exports = { runTests };
 }
+
+/*
+VERSION 1.0
+*/
