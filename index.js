@@ -14,6 +14,68 @@ const { exec } = require("child_process");
 
 // console.log();
 
+async function createPdfFromHtml() {
+  // function that opens up the puppeteer and creates a pdf from that html and save it as pdf.
+  const docHeight = () => {
+    const body = document.body;
+    const html = document.documentElement;
+    return Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+  };
+
+  let pathToResHtml = path.resolve(`./mocha-reports/Test-Results.html`);
+
+  let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  // await page.emulateMedia("screen");
+
+  await page.goto(outHtmlFileDetails.href, {
+    waitUntil: "domcontentloaded",
+  });
+  await page.setViewport({
+    width: 1440,
+    height: 900,
+    deviceScaleFactor: 2,
+  });
+  await sleep(1000);
+  const height = await page.evaluate(docHeight);
+
+  await page.pdf({
+    path: path.resolve(`./mocha-reports/Test-Results.pdf`),
+    margin: {
+      top: "20px",
+      left: "20px",
+      right: "20px",
+      bottom: "20px",
+    },
+    printBackground: true,
+    width: "1080px",
+    height: `${height + 200}px`,
+    displayHeaderFooter: false,
+  });
+  await browser.close();
+}
+
+function deletePrevJsonOutFile() {
+  // delete the prev out file
+  try {
+    fs.accessSync(path.resolve("./Test-Results.json"));
+    fs.unlinkSync(path.resolve("./Test-Results.json"));
+  } catch (err) {
+    console.log(
+      "something went wrong please re check your inputs and run the tool again."
+    );
+    process.exitCode = 1;
+    process.exit(1);
+  }
+}
+
 if (require.main === module) {
   let doesStoreOut = null;
   if (!argv.url) {
@@ -60,7 +122,7 @@ if (require.main === module) {
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
     if (doesStoreOut === false) return;
 
-    // take the markdown file and create the pdf with it
+    // generate the html output file with the mochawsome-report-generator
     await exec(
       `npx mochawesome-report-generator marge -i true -o "mocha-reports/" --charts true ${path.resolve(
         "./Test-Results.json"
@@ -72,63 +134,9 @@ if (require.main === module) {
           // console.log(`stderr: ${stderr}`);
         }
 
-        // function that opens up the puppeteer and creates a pdf from that html and save it as pdf.
-        const docHeight = () => {
-          const body = document.body;
-          const html = document.documentElement;
-          return Math.max(
-            body.scrollHeight,
-            body.offsetHeight,
-            html.clientHeight,
-            html.scrollHeight,
-            html.offsetHeight
-          );
-        };
-
-        let pathToResHtml = path.resolve(`./mocha-reports/Test-Results.html`);
-
-        let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        // await page.emulateMedia("screen");
-
-        await page.goto(outHtmlFileDetails.href, {
-          waitUntil: "domcontentloaded",
-        });
-        await page.setViewport({
-          width: 1440,
-          height: 900,
-          deviceScaleFactor: 2,
-        });
-        await sleep(1000);
-        const height = await page.evaluate(docHeight);
-
-        await page.pdf({
-          path: path.resolve(`./mocha-reports/Test-Results.pdf`),
-          margin: {
-            top: "20px",
-            left: "20px",
-            right: "20px",
-            bottom: "20px",
-          },
-          printBackground: true,
-          width: "1080px",
-          height: `${height + 200}px`,
-          displayHeaderFooter: false,
-        });
-        await browser.close();
-
-        // delete the prev out file
-        try {
-          fs.accessSync(path.resolve("./Test-Results.json"));
-          fs.unlinkSync(path.resolve("./Test-Results.json"));
-        } catch (err) {
-          console.log(
-            "something went wrong please re check your inputs and run the tool again."
-          );
-          process.exitCode = 1;
-          process.exit(1);
-        }
+        // execute function to create a pdf from the html output
+        await createPdfFromHtml();
+        deletePrevJsonOutFile();
       }
     );
 
@@ -138,27 +146,8 @@ if (require.main === module) {
   });
 } else {
   function runTests(liveUrl, outputDest) {
-    let mocha = new Mocha({
-      reporter: "json",
-      reporterOptions: {
-        output: outputDest,
-      },
-    });
-
-    // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
-    const testFilePath = path.join(
-      path.dirname(require.resolve("am-test/package.json")),
-      "test.js"
-    );
-
-    // console.log(liveUrl);
-    // process.env["TEST_url"] = liveUrl;
-
-    mocha.addFile(testFilePath);
-
-    mocha.run(function (failures) {
-      // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
-    });
+    // write code for programmatically running the tests by importing the package as module into other file.
+    console.log("programmatic api will be available soons coming soon...");
   }
   module.exports = { runTests };
 }

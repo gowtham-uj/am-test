@@ -134,7 +134,7 @@ class BBTest {
       !!derivedDepValues &&
       !!dynamicFieldName
     ) {
-      // currently only supporting the route body for dynamic field sand we can extend it later.
+      // currently only supporting the route body for dynamic fields and we can extend it later.
       let dynamicFieldOptions = ["body", "qParam", "rParam"];
       let resWithReplacedVals = null;
       // for functionality to replace the other fields also with the dynamic values.
@@ -177,7 +177,7 @@ class BBTest {
       return result;
       // execute the js code in the dep res key
     }
-    // dealing with nested routes with both dep routes and should also be derived to some vales
+    // dealing with nested routes with both dep routes and should also be derived to some values
     if (
       !!routeObj.dep_key &&
       !!routeObj.dep_res_val &&
@@ -232,7 +232,7 @@ class BBTest {
       if (!!route.dependency_routes) {
         let val = await this.recursiveDepRoutes(route.dependency_routes);
         derivedDepValues = { ...derivedDepValues, ...val };
-        // requester with derived vals here
+        // requester for routes with derived vals here
         let routesWithDerivedVals = await this.requester(
           route,
           derivedDepValues,
