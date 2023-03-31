@@ -90,9 +90,10 @@ if (require.main === module) {
     doesStoreOut = false;
   }
   let mocha;
+  console.log(path.resolve(`${argv.outputDest}`, `${argv.testId}`, ".json"));
   console.log(
     argv.absolutePath == "true"
-      ? `${argv.outputDest}/${argv.testId}.json`
+      ? `${argv.outputDest}${argv.testId}.json`
       : path.resolve("./mocha-reports/Test-Results.json")
   );
   if (argv.saveOutput == "true") {
