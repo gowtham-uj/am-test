@@ -90,7 +90,7 @@ if (require.main === module) {
     doesStoreOut = false;
   }
   // console.log("called directly");
-  let mocha;
+  let mocha = new Mocha();
   if (doesStoreOut === true) {
     mocha = new Mocha({
       reporter: "mochawesome",
@@ -104,8 +104,6 @@ if (require.main === module) {
         reportTitle: "Test Results",
       },
     });
-  } else if (doesStoreOut === false) {
-    mocha = new Mocha();
   }
 
   // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");

@@ -12,7 +12,7 @@
       "route_body": {
         "name": "guvi test bot",
         "email": "guvitest@guvi.in",
-        "role": "beginner",
+        "role": "coordinator",
         "experience": "1"
       },
       "top_level": true
