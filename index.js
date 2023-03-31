@@ -89,7 +89,7 @@ if (require.main === module) {
   } else if (argv.saveOutput == "false") {
     doesStoreOut = false;
   }
-  console.log(argv);
+  console.log(argv.outputDest.replace(".pdf", ".json"));
   let mocha;
   if (argv.saveOutput == "true") {
     mocha = new Mocha({
