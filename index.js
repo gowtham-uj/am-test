@@ -97,7 +97,7 @@ if (require.main === module) {
       reporterOptions: {
         reportFilename: doesStoreOut
           ? argv.absolutePath == true
-            ? path.resolve(`${argv.outputDest.replace(".pdf", ".json")}`)
+            ? `${argv.outputDest.replace(".pdf", ".json")}`
             : path.resolve("./mocha-reports/Test-Results.json")
           : null,
         quiet: true,
