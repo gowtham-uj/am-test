@@ -89,9 +89,9 @@ if (require.main === module) {
   } else if (argv.saveOutput == "false") {
     doesStoreOut = false;
   }
-  // console.log("called directly");
+  console.log(argv);
   let mocha;
-  if (doesStoreOut === true) {
+  if (argv.saveOutput == "true") {
     mocha = new Mocha({
       reporter: "mochawesome",
       reporterOptions: {
@@ -104,7 +104,7 @@ if (require.main === module) {
         reportTitle: "Test Results",
       },
     });
-  } else if (doesStoreOut === false) {
+  } else if (argv.saveOutput == "false") {
     mocha = new Mocha();
   }
 
