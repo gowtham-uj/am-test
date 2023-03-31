@@ -121,6 +121,7 @@ if (require.main === module) {
   mocha.addFile(testFilePath);
 
   mocha.run(async function (failures) {
+    return;
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
     if (doesStoreOut === false) return;
 
