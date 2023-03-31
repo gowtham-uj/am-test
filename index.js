@@ -96,7 +96,9 @@ if (require.main === module) {
       reporter: "mochawesome",
       reporterOptions: {
         reportFilename: doesStoreOut
-          ? path.resolve("./Test-Results.json")
+          ? argv.absolutePath == true
+            ? argv.outputDest
+            : path.resolve("./mocha-reports/Test-Results.json")
           : null,
         quiet: true,
         json: true,
