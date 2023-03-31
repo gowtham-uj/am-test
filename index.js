@@ -89,7 +89,6 @@ if (require.main === module) {
   } else if (argv.saveOutput == "false") {
     doesStoreOut = false;
   }
-  console.log(path.resolve(argv.outputDest.replace(".pdf", ".json")));
   let mocha;
   if (argv.saveOutput == "true") {
     mocha = new Mocha({
@@ -97,7 +96,7 @@ if (require.main === module) {
       reporterOptions: {
         reportFilename: doesStoreOut
           ? argv.absolutePath == "true"
-            ? `${argv.outputDest.replace(".pdf", ".json")}`
+            ? `${argv.outputDest}/${argv.testId}.json`
             : path.resolve("./mocha-reports/Test-Results.json")
           : null,
         quiet: true,
