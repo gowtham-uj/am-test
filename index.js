@@ -97,7 +97,7 @@ if (require.main === module) {
       reporterOptions: {
         reportFilename: doesStoreOut
           ? argv.absolutePath == true
-            ? argv.outputDest
+            ? `${argv.outputDest.replace(".pdf", ".json")}`
             : path.resolve("./mocha-reports/Test-Results.json")
           : null,
         quiet: true,
@@ -126,9 +126,13 @@ if (require.main === module) {
 
     // generate the html output file with the mochawsome-report-generator
     await exec(
-      `npx mochawesome-report-generator marge -i true -o "mocha-reports/" --charts true ${path.resolve(
-        "./Test-Results.json"
-      )}`,
+      `npx mochawesome-report-generator marge -i true -o ${
+        argv.absolutePath == true ? argv.outputDest : "mocha-reports/"
+      } --charts true ${
+        argv.absolutePath === true
+          ? argv.outputDest.replace(".pdf", ".json")
+          : path.resolve("./Test-Results.json")
+      }`,
       async (err, stdout, stderr) => {
         if (err) {
           // node couldn't execute the command
