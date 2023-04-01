@@ -90,7 +90,7 @@ if (require.main === module) {
     doesStoreOut = false;
   }
   let mocha;
-  // console.log(path.relative(process.cwd(), argv.outputDest));
+  console.log(argv.saveOutput === "true");
   if (argv.saveOutput == "true") {
     mocha = new Mocha({
       reporter: "mochawesome",
@@ -100,7 +100,7 @@ if (require.main === module) {
         //     ? `/home/sword/dev/test/${argv.testId}.json`
         //     : path.resolve("./mocha-reports/Test-Results.json")
         //   : null,
-        reportFilename: path.resolve(`./${"one"}.json`),
+        reportFilename: path.resolve("./mocha-reports/Test-Results.json"),
         quiet: true,
         json: true,
         html: false,
