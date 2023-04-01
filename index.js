@@ -93,7 +93,8 @@ if (require.main === module) {
   let mocha = new Mocha({
     reporter: "mochawesome",
     reporterOptions: {
-      reportFilename: path.resolve("./Test-Results.json"),
+      reportDir: "./test/",
+      reportFilename: path.resolve("Test-Results.json"),
       quiet: true,
       json: true,
       html: false,
@@ -112,6 +113,7 @@ if (require.main === module) {
   mocha.addFile(testFilePath);
 
   mocha.run(async function (failures) {
+    return;
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
     if (doesStoreOut === false) return;
 
