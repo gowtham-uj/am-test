@@ -90,7 +90,7 @@ if (require.main === module) {
     doesStoreOut = false;
   }
   let mocha;
-  console.log(path.relative(process.cwd(), path.dirname(argv.outputDest)));
+  console.log(path.relative(process.cwd(), argv.outputDest));
   if (argv.saveOutput == "true") {
     mocha = new Mocha({
       reporter: "mochawesome",
