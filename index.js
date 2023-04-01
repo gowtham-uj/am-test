@@ -90,23 +90,16 @@ if (require.main === module) {
     doesStoreOut = false;
   }
   // console.log("called directly");
-  let mocha;
-  if (doesStoreOut === true) {
-    mocha = new Mocha({
-      reporter: "mochawesome",
-      reporterOptions: {
-        reportFilename: doesStoreOut
-          ? path.resolve("./Test-Results.json")
-          : null,
-        quiet: true,
-        json: true,
-        html: false,
-        reportTitle: "Test Results",
-      },
-    });
-  } else if (doesStoreOut === false) {
-    mocha = new Mocha();
-  }
+  let mocha = new Mocha({
+    reporter: "mochawesome",
+    reporterOptions: {
+      reportFilename: path.resolve("./Test-Results.json");
+      quiet: true,
+      json: true,
+      html: false,
+      reportTitle: "Test Results",
+    },
+  });
 
   // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
   const testFilePath = path.join(
