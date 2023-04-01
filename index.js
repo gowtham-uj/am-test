@@ -168,9 +168,10 @@ if (require.main === module) {
     mocha.addFile(testFilePath);
 
     await mocha.run().on("end", function () {
-      console.log("All done");
-      return testFunc;
+      console.log("All Tests done");
     });
+
+    return;
   }
   module.exports = { runTests };
 }
