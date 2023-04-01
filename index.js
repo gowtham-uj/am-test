@@ -90,14 +90,14 @@ if (require.main === module) {
     doesStoreOut = false;
   }
   let mocha;
-  console.log(path.relative(process.cwd(), argv.outputDest));
+  // console.log(path.relative(process.cwd(), argv.outputDest));
   if (argv.saveOutput == "true") {
     mocha = new Mocha({
       reporter: "mochawesome",
       reporterOptions: {
         reportFilename: doesStoreOut
           ? argv.absolutePath == "true"
-            ? `${argv.outputDest}${argv.testId}.json`
+            ? `/home/sword/dev/test/${argv.testId}.json`
             : path.resolve("./mocha-reports/Test-Results.json")
           : null,
         quiet: true,
