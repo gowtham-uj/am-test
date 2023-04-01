@@ -95,11 +95,12 @@ if (require.main === module) {
     mocha = new Mocha({
       reporter: "mochawesome",
       reporterOptions: {
-        reportFilename: doesStoreOut
-          ? argv.absolutePath == "true"
-            ? `/home/sword/dev/test/${argv.testId}.json`
-            : path.resolve("./mocha-reports/Test-Results.json")
-          : null,
+        // reportFilename: doesStoreOut
+        //   ? argv.absolutePath == "true"
+        //     ? `/home/sword/dev/test/${argv.testId}.json`
+        //     : path.resolve("./mocha-reports/Test-Results.json")
+        //   : null,
+        reportFilename: `/home/sword/dev/test/${argv.testId}.json`,
         quiet: true,
         json: true,
         html: false,
