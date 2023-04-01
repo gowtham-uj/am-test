@@ -65,8 +65,8 @@ async function createPdfFromHtml() {
 function deletePrevJsonOutFile() {
   // delete the prev out file
   try {
-    fs.accessSync(path.resolve("./one.json"));
-    fs.unlinkSync(path.resolve("./one.json"));
+    fs.accessSync(path.resolve("./mochawesome-report/one.json"));
+    fs.unlinkSync(path.resolve("./mochawesome-report/one.json"));
   } catch (err) {
     console.log(
       "something went wrong please re check your inputs and run the tool again."
