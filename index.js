@@ -170,8 +170,6 @@ if (require.main === module) {
     await mocha.run(async function (failures) {
       // return;
       // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
-      if (saveOutput === false) return;
-
       // generate the html output file with the mochawsome-report-generator
       await exec(
         `npx mochawesome-report-generator marge -i true -o "mocha-reports/" --charts true ${path.resolve(
