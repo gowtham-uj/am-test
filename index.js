@@ -168,6 +168,7 @@ if (require.main === module) {
     mocha.addFile(testFilePath);
 
     await mocha.run();
+    return { success: true };
   }
   module.exports = { runTests };
 }
