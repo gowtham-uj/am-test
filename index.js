@@ -28,7 +28,7 @@ async function createPdfFromHtml() {
     );
   };
 
-  let pathToResHtml = path.resolve(`./mocha-reports/one.html`);
+  let pathToResHtml = path.resolve(`./mocha-reports/${argv.testId}.html`);
 
   let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
   const browser = await puppeteer.launch();
@@ -47,7 +47,7 @@ async function createPdfFromHtml() {
   const height = await page.evaluate(docHeight);
 
   await page.pdf({
-    path: path.resolve(`./mocha-reports/Test-Results.pdf`),
+    path: path.resolve(`./mocha-reports/${argv.testId}.pdf`),
     margin: {
       top: "20px",
       left: "20px",
@@ -65,8 +65,8 @@ async function createPdfFromHtml() {
 function deletePrevJsonOutFile() {
   // delete the prev out file
   try {
-    fs.accessSync(path.resolve("./mochawesome-report/one.json"));
-    fs.unlinkSync(path.resolve("./mochawesome-report/one.json"));
+    fs.accessSync(path.resolve(`./mochawesome-report/${argv.testId}.json`));
+    fs.unlinkSync(path.resolve(`./mochawesome-report/${argv.testId}.json`));
   } catch (err) {
     console.log(
       "something went wrong please re check your inputs and run the tool again."
@@ -118,7 +118,7 @@ if (require.main === module) {
     // generate the html output file with the mochawsome-report-generator
     await exec(
       `npx mochawesome-report-generator marge -i true -o "mocha-reports/" --charts true ${path.resolve(
-        "./mochawesome-report/one.json"
+        `./mochawesome-report/${argv.testId}.json`
       )}`,
       async (err, stdout, stderr) => {
         if (err) {
