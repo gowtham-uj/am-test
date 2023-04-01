@@ -89,7 +89,7 @@ if (require.main === module) {
   } else if (argv.saveOutput == "false") {
     doesStoreOut = false;
   }
-  console.log(`${process.cwd()}`);
+  // console.log(`${process.cwd()}`);
   let mocha = new Mocha({
     reporter: "mochawesome",
     reporterOptions: {
@@ -139,9 +139,35 @@ if (require.main === module) {
     // delete the markdown file which has created before
   });
 } else {
-  function runTests(liveUrl, outputDest) {
-    // write code for programmatically running the tests by importing the package as module into other file.
-    console.log("programmatic api will be available soons coming soon...");
+  async function runTests(liveUrl, saveOutput = false, testId = "default") {
+    if (!liveUrl) {
+      console.log(`please provide the url of the live app to test the app.
+  ex : am-test --url="somexample.com" with no last / of that url`);
+      process.exitCode = 1;
+      process.exit();
+    }
+    // console.log(`${process.cwd()}`);
+    let mocha = new Mocha({
+      reporter: "mochawesome",
+      reporterOptions: {
+        reportFilename: testId,
+        quiet: true,
+        json: true,
+        html: false,
+      },
+    });
+
+    // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
+    const testFilePath = path.join(
+      path.dirname(require.resolve("am-test/package.json")),
+      "test.js"
+    );
+
+    // process.env["TEST_url"] = argv.url;
+
+    mocha.addFile(testFilePath);
+
+    await mocha.run();
   }
   module.exports = { runTests };
 }
