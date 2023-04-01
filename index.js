@@ -123,8 +123,8 @@ if (require.main === module) {
       async (err, stdout, stderr) => {
         if (err) {
           // node couldn't execute the command
-          console.log(`stdout: ${stdout}`);
-          console.log(`stderr: ${stderr}`);
+          // console.log(`stdout: ${stdout}`);
+          // console.log(`stderr: ${stderr}`);
         }
 
         // execute function to create a pdf from the html output
