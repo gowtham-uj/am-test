@@ -100,7 +100,7 @@ if (require.main === module) {
         //     ? `/home/sword/dev/test/${argv.testId}.json`
         //     : path.resolve("./mocha-reports/Test-Results.json")
         //   : null,
-        reportFilename: `./${argv.testId}.json`,
+        reportFilename: path.resolve(`./${argv.testId}.json`),
         quiet: true,
         json: true,
         html: false,
