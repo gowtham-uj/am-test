@@ -98,7 +98,6 @@ if (require.main === module) {
       quiet: true,
       json: true,
       html: false,
-      reportTitle: "Test Results",
     },
   });
 
