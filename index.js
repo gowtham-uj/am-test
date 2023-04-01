@@ -139,7 +139,7 @@ if (require.main === module) {
     // delete the markdown file which has created before
   });
 } else {
-  testFunc: async function runTests(liveUrl, saveOutput = false, testId = "default") {
+  async function runTests(liveUrl, saveOutput = false, testId = "default") {
     if (!liveUrl) {
       console.log(`please provide the url of the live app to test the app.
   ex : am-test --url="somexample.com" with no last / of that url`);
@@ -167,12 +167,10 @@ if (require.main === module) {
 
     mocha.addFile(testFilePath);
 
-    await mocha
-      .run()
-      .on("end", function () {
-        console.log("All done");
-        return testFunc;
-      });
+    await mocha.run().on("end", function () {
+      console.log("All done");
+      return testFunc;
+    });
   }
   module.exports = { runTests };
 }
