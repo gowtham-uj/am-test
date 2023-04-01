@@ -94,7 +94,7 @@ if (require.main === module) {
     reporter: "mochawesome",
     reporterOptions: {
       // reportDir: path.resolve("/home/sword/dev/test/"),
-      // reportFilename: "test",
+      reportFilename: "test",
       quiet: true,
       json: true,
       html: false,
