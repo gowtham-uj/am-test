@@ -93,8 +93,8 @@ if (require.main === module) {
   let mocha = new Mocha({
     reporter: "mochawesome",
     reporterOptions: {
-      reportDir: "./test/",
-      reportFilename: path.resolve("Test-Results.json"),
+      reportDir: path.resolve("./test/"),
+      reportFilename: "test.json",
       quiet: true,
       json: true,
       html: false,
