@@ -94,7 +94,7 @@ if (require.main === module) {
     reporter: "mochawesome",
     reporterOptions: {
       reportDir: `${process.cwd()}`,
-      reportFilename: "one",
+      reportFilename: "./test/one",
       quiet: true,
       json: true,
       html: false,
