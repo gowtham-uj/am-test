@@ -130,6 +130,7 @@ if (require.main === module) {
         // execute function to create a pdf from the html output
         await createPdfFromHtml();
         deletePrevJsonOutFile();
+        await sleep(1000);
         process.exit(0);
       }
     );
