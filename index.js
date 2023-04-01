@@ -167,32 +167,7 @@ if (require.main === module) {
 
     mocha.addFile(testFilePath);
 
-    await mocha.run(async function (failures) {
-      // return;
-      // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
-      // generate the html output file with the mochawsome-report-generator
-      await exec(
-        `npx mochawesome-report-generator marge -i true -o "mocha-reports/" --charts true ${path.resolve(
-          `./mochawesome-report/${testId}.json`
-        )}`,
-        async (err, stdout, stderr) => {
-          if (err) {
-            // node couldn't execute the command
-            // console.log(`stdout: ${stdout}`);
-            // console.log(`stderr: ${stderr}`);
-          }
-
-          // execute function to create a pdf from the html output
-          await createPdfFromHtml();
-          await deletePrevJsonOutFile();
-          return { success: true };
-        }
-      );
-
-      // spin up the headless chrome with puppeteer and convert the html to pdf file and save it.
-
-      // delete the markdown file which has created before
-    });
+    await mocha.run();
   }
   module.exports = { runTests };
 }
