@@ -28,7 +28,7 @@ async function createPdfFromHtml() {
     );
   };
 
-  let pathToResHtml = path.resolve(`./mocha-reports/Test-Results.html`);
+  let pathToResHtml = path.resolve(`./mocha-reports/one.html`);
 
   let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
   const browser = await puppeteer.launch();
