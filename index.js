@@ -89,7 +89,7 @@ if (require.main === module) {
   } else if (argv.saveOutput == "false") {
     doesStoreOut = false;
   }
-  // console.log("called directly");
+  console.log(`${process.cwd()}`);
   let mocha = new Mocha({
     reporter: "mochawesome",
     reporterOptions: {
