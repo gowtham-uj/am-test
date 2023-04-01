@@ -111,14 +111,14 @@ if (require.main === module) {
   mocha.addFile(testFilePath);
 
   mocha.run(async function (failures) {
-    return;
+    // return;
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
     if (doesStoreOut === false) return;
 
     // generate the html output file with the mochawsome-report-generator
     await exec(
       `npx mochawesome-report-generator marge -i true -o "mocha-reports/" --charts true ${path.resolve(
-        "./Test-Results.json"
+        "./mochawesome-report/one.json"
       )}`,
       async (err, stdout, stderr) => {
         if (err) {
