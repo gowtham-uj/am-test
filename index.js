@@ -107,9 +107,10 @@ if (require.main === module) {
         reportTitle: "Test Results",
       },
     });
-  } else if (argv.saveOutput == "false") {
-    mocha = new Mocha();
   }
+  // } else if (argv.saveOutput == "false") {
+  //   mocha = new Mocha();
+  // }
 
   // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
   const testFilePath = path.join(
