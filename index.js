@@ -28,7 +28,7 @@ async function createPdfFromHtml() {
     );
   };
 
-  let pathToResHtml = path.resolve(`./mocha-reports/Test-Results.html`);
+  let pathToResHtml = path.resolve(`./mocha-reports/${argv.testId}.html`);
 
   let outHtmlFileDetails = url.pathToFileURL(pathToResHtml);
   const browser = await puppeteer.launch();
@@ -47,7 +47,7 @@ async function createPdfFromHtml() {
   const height = await page.evaluate(docHeight);
 
   await page.pdf({
-    path: path.resolve(`./mocha-reports/Test-Results.pdf`),
+    path: path.resolve(`./mocha-reports/${argv.testId}.pdf`),
     margin: {
       top: "20px",
       left: "20px",
@@ -65,8 +65,8 @@ async function createPdfFromHtml() {
 function deletePrevJsonOutFile() {
   // delete the prev out file
   try {
-    fs.accessSync(path.resolve("./Test-Results.json"));
-    fs.unlinkSync(path.resolve("./Test-Results.json"));
+    fs.accessSync(path.resolve(`./mochawesome-report/${argv.testId}.json`));
+    fs.unlinkSync(path.resolve(`./mochawesome-report/${argv.testId}.json`));
   } catch (err) {
     console.log(
       "something went wrong please re check your inputs and run the tool again."
@@ -89,28 +89,16 @@ if (require.main === module) {
   } else if (argv.saveOutput == "false") {
     doesStoreOut = false;
   }
-  let mocha;
-  console.log(argv.saveOutput === "true");
-  if (argv.saveOutput == "true") {
-    mocha = new Mocha({
-      reporter: "mochawesome",
-      reporterOptions: {
-        // reportFilename: doesStoreOut
-        //   ? argv.absolutePath == "true"
-        //     ? `/home/sword/dev/test/${argv.testId}.json`
-        //     : path.resolve("./mocha-reports/Test-Results.json")
-        //   : null,
-        reportFilename: path.resolve("./mocha-reports/Test-Results.json"),
-        quiet: true,
-        json: true,
-        html: false,
-        reportTitle: "Test Results",
-      },
-    });
-  }
-  // } else if (argv.saveOutput == "false") {
-  //   mocha = new Mocha();
-  // }
+  // console.log(`${process.cwd()}`);
+  let mocha = new Mocha({
+    reporter: "mochawesome",
+    reporterOptions: {
+      reportFilename: argv.testId,
+      quiet: true,
+      json: true,
+      html: false,
+    },
+  });
 
   // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
   const testFilePath = path.join(
@@ -123,19 +111,15 @@ if (require.main === module) {
   mocha.addFile(testFilePath);
 
   mocha.run(async function (failures) {
-    return;
+    // return;
     // process.exitCode = failures ? 1 : 0; // exit with non-zero status if there were failures
     if (doesStoreOut === false) return;
 
     // generate the html output file with the mochawsome-report-generator
     await exec(
-      `npx mochawesome-report-generator marge -i true -o ${
-        argv.absolutePath == true ? argv.outputDest : "mocha-reports/"
-      } --charts true ${
-        argv.absolutePath === true
-          ? argv.outputDest.replace(".pdf", ".json")
-          : path.resolve("./Test-Results.json")
-      }`,
+      `npx mochawesome-report-generator marge -i true -o "mocha-reports/" --charts true ${path.resolve(
+        `./mochawesome-report/${argv.testId}.json`
+      )}`,
       async (err, stdout, stderr) => {
         if (err) {
           // node couldn't execute the command
@@ -146,6 +130,7 @@ if (require.main === module) {
         // execute function to create a pdf from the html output
         await createPdfFromHtml();
         deletePrevJsonOutFile();
+        process.exit(0);
       }
     );
 
@@ -154,9 +139,39 @@ if (require.main === module) {
     // delete the markdown file which has created before
   });
 } else {
-  function runTests(liveUrl, outputDest) {
-    // write code for programmatically running the tests by importing the package as module into other file.
-    console.log("programmatic api will be available soons coming soon...");
+  async function runTests(liveUrl, saveOutput = false, testId = "default") {
+    if (!liveUrl) {
+      console.log(`please provide the url of the live app to test the app.
+  ex : am-test --url="somexample.com" with no last / of that url`);
+      return { success: false };
+    }
+    // console.log(`${process.cwd()}`);
+    let mocha = new Mocha({
+      reporter: "mochawesome",
+      reporterOptions: {
+        reportFilename: testId,
+        quiet: true,
+        json: true,
+        html: false,
+        consoleReporter: "none",
+      },
+    });
+
+    // path.join(path.dirname(require.resolve("am-test/package.json")), "test.js");
+    const testFilePath = path.join(
+      path.dirname(require.resolve("am-test/package.json")),
+      "test.js"
+    );
+
+    // process.env["TEST_url"] = argv.url;
+
+    mocha.addFile(testFilePath);
+
+    await mocha.run().on("end", function () {
+      console.log("All Tests done");
+    });
+
+    return;
   }
   module.exports = { runTests };
 }
