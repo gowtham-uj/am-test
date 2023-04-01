@@ -167,7 +167,7 @@ if (require.main === module) {
     mocha.addFile(testFilePath);
 
     await mocha.run(function () {
-      return;
+      process.exit(0);
     });
     return { success: true };
   }
