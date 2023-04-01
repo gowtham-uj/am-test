@@ -173,7 +173,7 @@ if (require.main === module) {
       // generate the html output file with the mochawsome-report-generator
       await exec(
         `npx mochawesome-report-generator marge -i true -o "mocha-reports/" --charts true ${path.resolve(
-          `./mochawesome-report/${argv.testId}.json`
+          `./mochawesome-report/${testId}.json`
         )}`,
         async (err, stdout, stderr) => {
           if (err) {
