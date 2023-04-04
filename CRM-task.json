@@ -1,15 +1,19 @@
 {
+  "auth_tokens": [],
   "routes": [
     {
-      "route_desc": "register admin",
-      "route_path": "/api/v1",
+      "route_desc": "create admin role account",
+      "route_path": "/api/admin/register",
       "route_type": "post",
       "are_query_params": false,
       "query_parameters": {},
       "are_route_params": false,
       "route_parameters": {},
       "is_route_body": true,
-      "route_body": {},
+      "route_body": {
+        "email": "guviin@gmail.com",
+        "password": "guviin@bot"
+      },
       "top_level": true
     },
     {},
