@@ -93,14 +93,27 @@ class BBTest {
       }
       let cleanedOut = res.data.run.output;
       // console.log(res.run);
-      derivedValsObj[derivedValKey] = cleanedOut;
+      derivedValsObj[derivedValKey] = cleanedOut.replace("\n", "");
       let tryJsonParse = null;
 
       try {
         let result = cleanedOut.replace(/[\[\]]/g, "");
         // console.log(result);
         let array = result.split(",");
-        tryJsonParse = array;
+        tryJsonParse = array.map((el, ind, arr) => {
+          el = el.replace(/(\r\n|\r|\n)/g, "");
+
+          el = el.replace("  '", "");
+          let strArr = Array.from(el);
+          strArr.forEach((el, ind, arr) => {
+            if (el === "'") delete arr[ind];
+          });
+          el = strArr.join("");
+          return el;
+        });
+        if (tryJsonParse.length === 1) {
+          tryJsonParse = tryJsonParse[0];
+        }
         derivedValsObj[derivedValKey] = tryJsonParse;
       } catch (err) {
         derivedValsObj[derivedValKey] = cleanedOut;
@@ -117,11 +130,11 @@ class BBTest {
     let reqObj = {};
     reqObj.url = `${this.liveLink}${routeObj.route_path}`;
     reqObj.method = routeObj.route_type;
-    if (routeObj.are_query_params === true) {
-      const result =
-        "?" + new URLSearchParams(routeObj.query_parameters).toString();
-      reqObj.url = `${reqObj.url}${result}`;
-    }
+    // if (routeObj.are_query_params === true) {
+    //   const result =
+    //     "?" + new URLSearchParams(routeObj.query_parameters).toString();
+    //   reqObj.url = `${reqObj.url}${result}`;
+    // }
 
     if (routeObj.is_route_body === true) {
       // console.log(routeObj);
@@ -150,11 +163,38 @@ class BBTest {
       if (dynamicFieldName === "body") {
         reqObj.data = resWithReplacedVals;
       }
+      if (dynamicFieldName === "qParam") {
+        console.log("dealing with the query parameters");
+        // find out all of the key value pairs with dynamic values
+        let keysWithDynamicVals = {};
+        for (const key in routeObj.query_parameters) {
+          const qParamVal = routeObj.query_parameters[key];
+          if (Array.from(qParamVal)[0] == "@") {
+            keysWithDynamicVals[key] = qParamVal;
+          }
+        }
+
+        // create obj with query params and derived values and add it to the url
+        for (const key in keysWithDynamicVals) {
+          const fieldVarName = keysWithDynamicVals[key];
+          keysWithDynamicVals[key] =
+            derivedDepValues[fieldVarName.split("@")[1]];
+        }
+
+        routeObj.query_parameters = {
+          ...routeObj.query_parameters,
+          ...keysWithDynamicVals,
+        };
+
+        const result =
+          "?" + new URLSearchParams(routeObj.query_parameters).toString();
+        reqObj.url = `${reqObj.url}${result}`;
+      }
     }
 
-    // console.log(reqObj);
+    console.log(reqObj);
     // do the request
-    let req = await axios(reqObj);
+    let req = await axios(reqObj).catch((err) => {});
 
     if (routeObj.top_level === true && req.status === 200) {
       return { success: true };
@@ -236,7 +276,7 @@ class BBTest {
         let routesWithDerivedVals = await this.requester(
           route,
           derivedDepValues,
-          "body"
+          route.dynamic_field
         );
         describe(`Working of ${route.route_desc}`, function () {
           it("should return 200 response", function () {
@@ -265,7 +305,8 @@ describe("starting to execute the tests", async function () {
 
     // parse from env variables and store it in variable and use it
     // due to render we cant modify the render the env vars so currently using static value but whne in production we will use the env variables.
-    let test = new BBTest(`https://dummy-assign-mentor.onrender.com`);
+    // let test = new BBTest(`https://dummy-assign-mentor.onrender.com`);
+    let test = new BBTest(`http://localhost:4000`);
 
     if (!!argv.url) {
       test = new BBTest(`${argv.url}`);

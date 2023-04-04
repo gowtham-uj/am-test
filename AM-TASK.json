@@ -72,6 +72,7 @@
         "mentorId": "@dep.mentorId"
       },
       "top_level": true,
+      "dynamic_field": "body",
       "dependency_routes": [
         {
           "route_desc": "get all students",
@@ -115,6 +116,7 @@
         "mentorId": "@dep.mentorId"
       },
       "top_level": true,
+      "dynamic_field": "body",
       "dependency_routes": [
         {
           "route_desc": "get all students",
@@ -140,7 +142,7 @@
           "is_route_body": false,
           "route_body": {},
           "dep_key": "dep.mentorId",
-          "dep_res_val": "$${res.data[0].id}"
+          "dep_res_val": "$${res.data[1].id}"
         }
       ]
     },
@@ -158,6 +160,7 @@
         "newMentorId": "@dep.mentorId"
       },
       "top_level": true,
+      "dynamic_field": "body",
       "dependency_routes": [
         {
           "route_desc": "get all students",
@@ -190,16 +193,16 @@
     {
       "route_desc": "get student for a mentor",
       "route_path": "/get-mentor-studs",
-      "route_type": "post",
-      "are_query_params": false,
-      "query_parameters": {},
+      "route_type": "get",
+      "are_query_params": true,
+      "query_parameters": {
+        "mentorId": "@dep.mentorId"
+      },
       "are_route_params": false,
       "route_parameters": {},
       "is_route_body": false,
-      "route_body": {
-        "mentorId": "@dep.mentorId"
-      },
       "top_level": true,
+      "dynamic_field": "qParam",
       "dependency_routes": [
         {
           "route_desc": "get all mentors",
