@@ -15,7 +15,8 @@ class BBTest {
   }
   // parse the json file details about routes
   async parseConfigJson() {
-    const json = require("./AM-TASK.json");
+    // const json = require("./AM-TASK.json");
+    const json = require("./CRM-task.json");
     this.routeDetails = json.routes;
   }
   async replaceFieldsWithDerivedVals(routeObj, derivedVals) {
@@ -63,7 +64,7 @@ class BBTest {
           method: "post",
           data: {
             language: "javascript",
-            version: "16.3.0",
+            version: "18.15.0",
             files: [
               {
                 name: "my_cool_code.js",
@@ -130,11 +131,13 @@ class BBTest {
     let reqObj = {};
     reqObj.url = `${this.liveLink}${routeObj.route_path}`;
     reqObj.method = routeObj.route_type;
-    // if (routeObj.are_query_params === true) {
-    //   const result =
-    //     "?" + new URLSearchParams(routeObj.query_parameters).toString();
-    //   reqObj.url = `${reqObj.url}${result}`;
-    // }
+    reqObj.headers = {};
+
+    if (routeObj.are_query_params === true) {
+      const result =
+        "?" + new URLSearchParams(routeObj.query_parameters).toString();
+      reqObj.url = `${reqObj.url}${result}`;
+    }
 
     if (routeObj.is_route_body === true) {
       // console.log(routeObj);
@@ -190,15 +193,39 @@ class BBTest {
           "?" + new URLSearchParams(routeObj.query_parameters).toString();
         reqObj.url = `${reqObj.url}${result}`;
       }
+      if (dynamicFieldName === "authToken") {
+        // CODE TO take the auth token and put it in the request obj
+        // console.log(derivedDepValues);
+        reqObj.headers["auth-token"] = `${derivedDepValues[`dep.authToken`]}`;
+      }
     }
 
-    console.log(reqObj);
+    // console.log(reqObj);
     // do the request
-    let req = await axios(reqObj).catch((err) => {});
+    let req = await axios(reqObj).catch((error) => {
+      // console.log(`error in test ${error}`);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        // console.log(error.response.status);
+        return error.response;
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        // console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        // console.log("Error", error.message);
+      }
+    });
 
-    if (routeObj.top_level === true && req.status === 200) {
+    if (routeObj.top_level === true && (!!req ? req.status === 200 : false)) {
       return { success: true };
-    } else if (routeObj.top_level === true && req.status !== 200) {
+    } else if (
+      routeObj.top_level === true &&
+      (!!req ? req.status !== 200 : false)
+    ) {
       return { success: false };
     }
     if (!!routeObj.dep_key && !!routeObj.dep_res_val) {
@@ -207,6 +234,7 @@ class BBTest {
       let objForCodeExec = {
         data: req.data,
         status: req.status,
+        headers: req.headers,
       };
 
       let result = await this.cleanExecTemplateCode(
@@ -278,16 +306,34 @@ class BBTest {
           derivedDepValues,
           route.dynamic_field
         );
-        describe(`Working of ${route.route_desc}`, function () {
-          it("should return 200 response", function () {
-            assert.equal(routesWithDerivedVals.success, true);
+        if (route.negative === true) {
+          describe(`${route.route_desc}`, function () {
+            it("should not return 200 response", function () {
+              assert.equal(
+                routesWithDerivedVals != undefined
+                  ? routesWithDerivedVals.success
+                  : false,
+                false
+              );
+            });
           });
-        });
+        } else {
+          describe(`${route.route_desc}`, function () {
+            it("should return 200 response", function () {
+              assert.equal(
+                routesWithDerivedVals != undefined
+                  ? routesWithDerivedVals.success
+                  : false,
+                true
+              );
+            });
+          });
+        }
         continue;
       }
       // requester with normal routes without dep routes will execute here
       let res = await this.requester(route);
-      describe(`Working of ${route.route_desc}`, function () {
+      describe(`${route.route_desc}`, function () {
         it("should return 200 response", function () {
           assert.equal(res.success, true);
         });
@@ -306,7 +352,7 @@ describe("starting to execute the tests", async function () {
     // parse from env variables and store it in variable and use it
     // due to render we cant modify the render the env vars so currently using static value but whne in production we will use the env variables.
     // let test = new BBTest(`https://dummy-assign-mentor.onrender.com`);
-    let test = new BBTest(`http://localhost:4000`);
+    let test = new BBTest(`http://localhost:4050`);
 
     if (!!argv.url) {
       test = new BBTest(`${argv.url}`);

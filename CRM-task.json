@@ -11,13 +11,224 @@
       "route_parameters": {},
       "is_route_body": true,
       "route_body": {
-        "email": "guviin@gmail.com",
+        "fname": "guvi-bot",
+        "lname": "admin",
+        "email": "guviadmin@gmail.com",
         "password": "guviin@bot"
       },
       "top_level": true
     },
-    {},
-    {},
-    {}
+    {
+      "route_desc": "login of the admin account",
+      "route_path": "/api/admin/login",
+      "route_type": "post",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": true,
+      "route_body": {
+        "email": "guviadmin@gmail.com",
+        "password": "guviin@bot"
+      },
+      "top_level": true
+    },
+    {
+      "route_desc": "checking get lead from admin dashboard",
+      "route_path": "/api/admindashboard/lead",
+      "route_type": "get",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": false,
+      "route_body": {},
+      "top_level": true,
+      "dynamic_field": "authToken",
+      "dependency_routes": [
+        {
+          "route_desc": "login of the user to get the auth token",
+          "route_path": "/api/admin/login",
+          "route_type": "post",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": true,
+          "route_body": {
+            "email": "guviadmin@gmail.com",
+            "password": "guviin@bot"
+          },
+          "dep_key": "dep.authToken",
+          "dep_res_val": "$${res.headers['auth-token']}"
+        }
+      ]
+    },
+    {
+      "route_desc": "create manager role account",
+      "route_path": "/api/manager/register",
+      "route_type": "post",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": true,
+      "route_body": {
+        "fname": "guvi-bot",
+        "lname": "manager",
+        "email": "guvimanager@gmail.com",
+        "password": "guviin@bot"
+      },
+      "top_level": true,
+      "dynamic_field": "authToken",
+      "dependency_routes": [
+        {
+          "route_desc": "login of the user to get the auth token",
+          "route_path": "/api/admin/login",
+          "route_type": "post",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": true,
+          "route_body": {
+            "email": "guviadmin@gmail.com",
+            "password": "guviin@bot"
+          },
+          "dep_key": "dep.authToken",
+          "dep_res_val": "$${res.headers['auth-token']}"
+        }
+      ]
+    },
+    {
+      "route_desc": "login manager role account",
+      "route_path": "/api/manager/login",
+      "route_type": "post",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": true,
+      "route_body": {
+        "email": "guvimanager@gmail.com",
+        "password": "guviin@bot"
+      },
+      "top_level": true
+    },
+    {
+      "route_desc": "create employee role account",
+      "route_path": "/api/employee/register",
+      "route_type": "post",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": true,
+      "route_body": {
+        "fname": "guvi-bot",
+        "lname": "employee",
+        "email": "guviemployee@gmail.com",
+        "password": "guviin@bot"
+      },
+      "top_level": true,
+      "dynamic_field": "authToken",
+      "dependency_routes": [
+        {
+          "route_desc": "login of the user to get the auth token",
+          "route_path": "/api/admin/login",
+          "route_type": "post",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": true,
+          "route_body": {
+            "email": "guviadmin@gmail.com",
+            "password": "guviin@bot"
+          },
+          "dep_key": "dep.authToken",
+          "dep_res_val": "$${res.headers['auth-token']}"
+        }
+      ]
+    },
+    {
+      "route_desc": "login employee role account",
+      "route_path": "/api/employee/login",
+      "route_type": "post",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": true,
+      "route_body": {
+        "email": "guviemployee@gmail.com",
+        "password": "guviin@bot"
+      },
+      "top_level": true
+    },
+    {
+      "route_desc": "Authorization : employee should not have access to the manager endpoints",
+      "route_path": "/api/manager/lead",
+      "route_type": "get",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": false,
+      "route_body": {},
+      "top_level": true,
+      "dynamic_field": "authToken",
+      "negative": true,
+      "dependency_routes": [
+        {
+          "route_desc": "login of the user to get the auth token",
+          "route_path": "/api/employee/login",
+          "route_type": "post",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": true,
+          "route_body": {
+            "email": "guviadmin@gmail.com",
+            "password": "guviin@bot"
+          },
+          "dep_key": "dep.authToken",
+          "dep_res_val": "$${res.headers['auth-token']}"
+        }
+      ]
+    },
+    {
+      "route_desc": "Authorization : manager should not have access to the admin endpoints",
+      "route_path": "/api/admin/lead",
+      "route_type": "get",
+      "are_query_params": false,
+      "query_parameters": {},
+      "are_route_params": false,
+      "route_parameters": {},
+      "is_route_body": false,
+      "route_body": {},
+      "top_level": true,
+      "dynamic_field": "authToken",
+      "negative": true,
+      "dependency_routes": [
+        {
+          "route_desc": "login of the user to get the auth token",
+          "route_path": "/api/manager/login",
+          "route_type": "post",
+          "are_query_params": false,
+          "query_parameters": {},
+          "are_route_params": false,
+          "route_parameters": {},
+          "is_route_body": true,
+          "route_body": {
+            "email": "guvimanager@gmail.com",
+            "password": "guviin@bot"
+          },
+          "dep_key": "dep.authToken",
+          "dep_res_val": "$${res.headers['auth-token']}"
+        }
+      ]
+    }
   ]
 }
