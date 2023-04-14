@@ -306,7 +306,7 @@ class BBTest {
     if (this.isDbReset === "true") {
       if (this.dbConfig.dbmsName === "mongodb") {
         let connectUrl = this.dbConfig.connectionUrl;
-        console.log(connectUrl);
+        // console.log(connectUrl);
         const client = new MongoClient(connectUrl);
 
         try {
