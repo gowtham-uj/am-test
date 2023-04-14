@@ -299,8 +299,8 @@ class BBTest {
 
   async AMTaskTests() {
     await this.parseConfigJson();
-    console.log(this);
-    if (this.isDbReset === true) {
+    // console.log(this);
+    if (this.isDbReset === "true") {
       if (this.dbConfig.dbmsName === "mongodb") {
         let connectUrl = this.dbConfig.connectionUrl;
         console.log(connectUrl);

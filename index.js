@@ -119,9 +119,6 @@ if (require.main === module) {
       );
       return;
     }
-    if (argv.resetCollections) {
-      argv.resetCollections = argv.resetCollections.split(",");
-    }
   }
   // console.log(`${process.cwd()}`);
   let mocha = new Mocha({
