@@ -26,8 +26,8 @@ class BBTest {
     // const json = require("./AM-TASK.json");
     const json = require("./CRM-task.json");
     this.routeDetails = json.routes;
-    this.isDbReset = json.DbReset;
-    this.dbConfig = json.DbResetConfig;
+    // this.isDbReset = json.DbReset;
+    // this.dbConfig = json.DbResetConfig;
     // console.log(this.dbConfig.resetCollections.split(","));
   }
   async replaceFieldsWithDerivedVals(routeObj, derivedVals) {

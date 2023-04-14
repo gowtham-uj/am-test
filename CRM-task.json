@@ -1,5 +1,5 @@
 {
-  "DbReset": "true",
+  "DbReset": "false",
   "DbResetConfig": {
     "dbmsName": "mongodb",
     "connectionUrl": "mongodb+srv://gowthamuj:ElF3iLQoBH8g3m6g@playground.isbnxjc.mongodb.net/playground?retryWrites=true&w=majority",
