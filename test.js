@@ -299,13 +299,16 @@ class BBTest {
 
   async AMTaskTests() {
     await this.parseConfigJson();
-    // console.log(this.routeDetails.length);
+    console.log(this);
     if (this.isDbReset === true) {
       if (this.dbConfig.dbmsName === "mongodb") {
         let connectUrl = this.dbConfig.connectionUrl;
+        console.log(connectUrl);
         const client = new MongoClient(connectUrl);
+
         try {
           await client.connect();
+          console.log(this.dbConfig.dbName);
           let db = await client.db(this.dbConfig.dbName);
           console.log(await db.listCollections().toArray());
           for (const collectionName of this.dbConfig.resetCollections) {
