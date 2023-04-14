@@ -307,6 +307,7 @@ class BBTest {
         try {
           await client.connect();
           let db = await client.db(this.dbConfig.dbName);
+          console.log(await db.listCollections().toArray());
           for (const collectionName of this.dbConfig.resetCollections) {
             try {
               const result = await db
