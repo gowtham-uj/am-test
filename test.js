@@ -26,6 +26,9 @@ class BBTest {
     // const json = require("./AM-TASK.json");
     const json = require("./CRM-task.json");
     this.routeDetails = json.routes;
+    this.isDbReset = json.DbReset;
+    this.dbConfig = json.DbResetConfig;
+    // console.log(this.dbConfig.resetCollections.split(","));
   }
   async replaceFieldsWithDerivedVals(routeObj, derivedVals) {
     // console.log(derivedVals);
@@ -308,10 +311,13 @@ class BBTest {
 
         try {
           await client.connect();
-          console.log(this.dbConfig.dbName);
+          // console.log(this.dbConfig.dbName);
           let db = await client.db(this.dbConfig.dbName);
-          console.log(await db.listCollections().toArray());
-          for (const collectionName of this.dbConfig.resetCollections) {
+          // console.log(await db.listCollections().toArray());
+          let collectionArr = this.dbConfig.resetCollections.split(",");
+          // console.log(collectionArr);
+          for (const collectionName of collectionArr) {
+            // console.log(collectionName);
             try {
               const result = await db
                 .collection(`${collectionName}`)
