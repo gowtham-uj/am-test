@@ -89,6 +89,40 @@ if (require.main === module) {
   } else if (argv.saveOutput == "false") {
     doesStoreOut = false;
   }
+  if (argv.dbReset == "true") {
+    if (!argv.dbmsName) {
+      console.log(`please provide the dbms of your database.
+      ex: mongodb, mysql, postgresql`);
+      return;
+    }
+    if (argv.dbmsName != "mongodb") {
+      console.log(
+        "currently the tool only supports mongodb databases and rest are not supported"
+      );
+      return;
+    }
+    if (!argv.connectionUrl) {
+      console.log(`please provide the connection url of the database`);
+      return;
+    }
+    if (!argv.dbName) {
+      console.log("please provide the database name");
+      return;
+    }
+    if (!argv.dbName) {
+      console.log("please provide the database name");
+      return;
+    }
+    if (!argv.resetCollections) {
+      console.log(
+        "please provide the collection names t reset . collection names in which all the records in those collections should be deleted."
+      );
+      return;
+    }
+    if (argv.resetCollections) {
+      argv.resetCollections = argv.resetCollections.split(",");
+    }
+  }
   // console.log(`${process.cwd()}`);
   let mocha = new Mocha({
     reporter: "mochawesome",

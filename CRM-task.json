@@ -1,5 +1,11 @@
 {
-  "auth_tokens": [],
+  "DbReset": true,
+  "DbResetConfig": {
+    "dbmsName": "mongodb",
+    "connectionUrl": "mongodb+srv://gowthamuj:ElF3iLQoBH8g3m6g@playground.isbnxjc.mongodb.net/playground?retryWrites=true&w=majority",
+    "dbName": "playground",
+    "resetCollections": []
+  },
   "routes": [
     {
       "route_desc": "create admin role account",

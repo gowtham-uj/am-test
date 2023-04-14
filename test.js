@@ -6,12 +6,20 @@ const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
 const sleep = require("sleep-promise");
+const MongoClient = require("mongodb").MongoClient;
 // const assertProm = require("chai-as-promised");
 
 class BBTest {
   constructor(liveLink) {
     this.liveLink = liveLink;
     this.routeDetails = {};
+    this.isDbReset = argv.dbReset;
+    this.dbConfig = {
+      dbmsName: argv.dbmsName,
+      connectionUrl: argv.connectionUrl,
+      dbName: argv.dbName,
+      resetCollections: argv.resetCollections,
+    };
   }
   // parse the json file details about routes
   async parseConfigJson() {
@@ -292,7 +300,30 @@ class BBTest {
   async AMTaskTests() {
     await this.parseConfigJson();
     // console.log(this.routeDetails.length);
-
+    if (this.isDbReset === true) {
+      if (this.dbConfig.dbmsName === "mongodb") {
+        let connectUrl = this.dbConfig.connectionUrl;
+        const client = new MongoClient(connectUrl);
+        try {
+          await client.connect();
+          let db = await client.db(this.dbConfig.dbName);
+          for (const collectionName of this.dbConfig.resetCollections) {
+            try {
+              const result = await db
+                .collection(`${collectionName}`)
+                .deleteMany();
+            } catch (err) {
+              console.log("something went wring with the db reset ");
+              return;
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        } finally {
+          client.close();
+        }
+      }
+    }
     for (let index = 0; index < this.routeDetails.length; index++) {
       let derivedDepValues = {};
       const route = this.routeDetails[index];
@@ -351,8 +382,8 @@ describe("starting to execute the tests", async function () {
 
     // parse from env variables and store it in variable and use it
     // due to render we cant modify the render the env vars so currently using static value but whne in production we will use the env variables.
-    // let test = new BBTest(`https://dummy-assign-mentor.onrender.com`);
-    let test = new BBTest(`http://localhost:4050`);
+    let test = new BBTest(`https://dummy-crm-app.onrender.com`);
+    // let test = new BBTest(`http://localhost:4050`);
 
     if (!!argv.url) {
       test = new BBTest(`${argv.url}`);
