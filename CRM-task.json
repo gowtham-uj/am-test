@@ -1,4 +1,7 @@
 {
+  "areBackendTests": true,
+  "areDbTests": false,
+  "areFrontendTests": true,
   "DbReset": "false",
   "DbResetConfig": {
     "dbmsName": "mongodb",
@@ -236,5 +239,7 @@
         }
       ]
     }
-  ]
+  ],
+  "dbTests": [],
+  "frontendTests": []
 }
