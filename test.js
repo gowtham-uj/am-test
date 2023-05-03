@@ -392,7 +392,7 @@ describe("starting to execute the tests", async function () {
 
     // parse from env variables and store it in variable and use it
     // due to render we cant modify the render the env vars so currently using static value but whne in production we will use the env variables.
-    let test = new BBTest(`https://dummy-crm-app.onrender.com`);
+    let test = new BBTest(``);
     // let test = new BBTest(`http://localhost:4050`);
 
     if (!!argv.url) {
