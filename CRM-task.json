@@ -1,5 +1,5 @@
 {
-  "areBackendTests": false,
+  "areBackendTests": true,
   "areDbTests": false,
   "areFrontendTests": true,
   "DbReset": "false",
