@@ -82,7 +82,7 @@ class BBTest {
       }
     }
     if (this.areBackendTests === true) {
-      runBackendTestsFunc(this.routeDetails, this);
+      await runBackendTestsFunc(this.routeDetails, this);
     }
 
     if (this.areFrontendTests === true) {
