@@ -1,5 +1,5 @@
 {
-  "areBackendTests": true,
+  "areBackendTests": false,
   "areDbTests": false,
   "areFrontendTests": true,
   "DbReset": "false",
@@ -241,5 +241,13 @@
     }
   ],
   "dbTests": [],
-  "frontendTests": []
+  "frontendTests": [
+    {
+      "test_desc": "",
+      "url": "",
+      "selector": "",
+      "typeOfEl": "",
+      "top_level": true
+    }
+  ]
 }

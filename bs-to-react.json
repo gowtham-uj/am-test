@@ -1,0 +1,58 @@
+{
+  "areBackendTests": false,
+  "areDbTests": false,
+  "areFrontendTests": true,
+  "DbReset": "false",
+  "DbResetConfig": {
+    "dbmsName": "",
+    "connectionUrl": "",
+    "dbName": "",
+    "resetCollections": ""
+  },
+  "routes": [],
+  "dbTests": [],
+  "frontendTests": [
+    {
+      "test_desc": "check the cart button",
+      "url": "localhost:3000/",
+      "selector": "#main-cart-btn",
+      "checkElHtmlName": "button",
+      "checkChildElementTag": "null",
+      "checkChildSelector": "null",
+      "top_level": true,
+      "active": false
+    },
+    {
+      "test_desc": "The product cards section",
+      "url": "localhost:3000/",
+      "selector": "#product-cards-container",
+      "checkElHtmlName": "div",
+      "checkChildElementTag": "null",
+      "checkChildSelector": "null",
+      "top_level": true,
+      "active": false
+    },
+    {
+      "test_desc": "Images inside the product cards section",
+      "url": "localhost:3000/",
+      "selector": "#product-cards-container img",
+      "checkElHtmlName": "img",
+      "checkChildElementTag": "null",
+      "checkChildSelector": "null",
+      "top_level": true,
+      "active": false
+    },
+    {
+      "test_desc": "check package.json : react",
+      "url": "localhost:3000/",
+      "selector": "null",
+      "checkElHtmlName": "null",
+      "checkChildElementTag": "null",
+      "checkChildSelector": "null",
+      "checkPackageName": true,
+      "packageName": "react-dom",
+      "top_level": true,
+      "active": true
+    }
+  ]
+}

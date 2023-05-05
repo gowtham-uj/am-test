@@ -7,7 +7,8 @@ const { hideBin } = require("yargs/helpers");
 const argv = yargs(hideBin(process.argv)).argv;
 const sleep = require("sleep-promise");
 const MongoClient = require("mongodb").MongoClient;
-// const assertProm = require("chai-as-promised");
+
+const runFrontendTestsFunc = require("./frontendTests");
 
 class BBTest {
   constructor(liveLink) {
@@ -24,8 +25,19 @@ class BBTest {
   // parse the json file details about routes
   async parseConfigJson() {
     // const json = require("./AM-TASK.json");
-    const json = require("./CRM-task.json");
-    this.routeDetails = json.routes;
+    const json = require("./bs-to-react.json");
+    if (json.areBackendTests === true) {
+      this.areBackendTests = true;
+      this.routeDetails = json.routes;
+    }
+    if (json.areDbTests === true) {
+      this.areDbTests = true;
+      this.dbTests = json.dbTests;
+    }
+    if (json.areFrontendTests === true) {
+      this.areFrontendTests = true;
+      this.frontendTests = json.frontendTests;
+    }
     // this.isDbReset = json.DbReset;
     // this.dbConfig = json.DbResetConfig;
     // console.log(this.dbConfig.resetCollections.split(","));
@@ -334,51 +346,57 @@ class BBTest {
         }
       }
     }
-    for (let index = 0; index < this.routeDetails.length; index++) {
-      let derivedDepValues = {};
-      const route = this.routeDetails[index];
-      // console.log(route);
-      if (!!route.dependency_routes) {
-        let val = await this.recursiveDepRoutes(route.dependency_routes);
-        derivedDepValues = { ...derivedDepValues, ...val };
-        // requester for routes with derived vals here
-        let routesWithDerivedVals = await this.requester(
-          route,
-          derivedDepValues,
-          route.dynamic_field
-        );
-        if (route.negative === true) {
-          describe(`${route.route_desc}`, function () {
-            it("should not return 200 response", function () {
-              assert.equal(
-                routesWithDerivedVals != undefined
-                  ? routesWithDerivedVals.success
-                  : false,
-                false
-              );
+    if (this.areBackendTests === true) {
+      for (let index = 0; index < this.routeDetails.length; index++) {
+        let derivedDepValues = {};
+        const route = this.routeDetails[index];
+        // console.log(route);
+        if (!!route.dependency_routes) {
+          let val = await this.recursiveDepRoutes(route.dependency_routes);
+          derivedDepValues = { ...derivedDepValues, ...val };
+          // requester for routes with derived vals here
+          let routesWithDerivedVals = await this.requester(
+            route,
+            derivedDepValues,
+            route.dynamic_field
+          );
+          if (route.negative === true) {
+            describe(`${route.route_desc}`, function () {
+              it("should not return 200 response", function () {
+                assert.equal(
+                  routesWithDerivedVals != undefined
+                    ? routesWithDerivedVals.success
+                    : false,
+                  false
+                );
+              });
             });
-          });
-        } else {
-          describe(`${route.route_desc}`, function () {
-            it("should return 200 response", function () {
-              assert.equal(
-                routesWithDerivedVals != undefined
-                  ? routesWithDerivedVals.success
-                  : false,
-                true
-              );
+          } else {
+            describe(`${route.route_desc}`, function () {
+              it("should return 200 response", function () {
+                assert.equal(
+                  routesWithDerivedVals != undefined
+                    ? routesWithDerivedVals.success
+                    : false,
+                  true
+                );
+              });
             });
-          });
+          }
+          continue;
         }
-        continue;
-      }
-      // requester with normal routes without dep routes will execute here
-      let res = await this.requester(route);
-      describe(`${route.route_desc}`, function () {
-        it("should return 200 response", function () {
-          assert.equal(res.success, true);
+        // requester with normal routes without dep routes will execute here
+        let res = await this.requester(route);
+        describe(`${route.route_desc}`, function () {
+          it("should return 200 response", function () {
+            assert.equal(res.success, true);
+          });
         });
-      });
+      }
+    }
+
+    if (this.areFrontendTests === true) {
+      await runFrontendTestsFunc(this.frontendTests, this);
     }
     return { success: true };
   }
