@@ -19,8 +19,10 @@
       "checkElHtmlName": "button",
       "checkChildElementTag": "null",
       "checkChildSelector": "null",
+      "checkPackageName": false,
+      "packageName": "null",
       "top_level": true,
-      "active": false
+      "active": true
     },
     {
       "test_desc": "The product cards section",
@@ -29,8 +31,10 @@
       "checkElHtmlName": "div",
       "checkChildElementTag": "null",
       "checkChildSelector": "null",
+      "checkPackageName": false,
+      "packageName": "null",
       "top_level": true,
-      "active": false
+      "active": true
     },
     {
       "test_desc": "Images inside the product cards section",
@@ -39,8 +43,10 @@
       "checkElHtmlName": "img",
       "checkChildElementTag": "null",
       "checkChildSelector": "null",
+      "checkPackageName": false,
+      "packageName": "null",
       "top_level": true,
-      "active": false
+      "active": true
     },
     {
       "test_desc": "check package.json : react",
@@ -50,8 +56,40 @@
       "checkChildElementTag": "null",
       "checkChildSelector": "null",
       "checkPackageName": true,
+      "packageName": "react",
+      "top_level": true,
+      "active": true
+    },
+    {
+      "test_desc": "check package.json : react-dom",
+      "url": "localhost:3000/",
+      "selector": "null",
+      "checkElHtmlName": "null",
+      "checkChildElementTag": "null",
+      "checkChildSelector": "null",
+      "checkPackageName": true,
       "packageName": "react-dom",
       "top_level": true,
+      "active": true
+    },
+    {
+      "test_desc": "check add to cart is working or not",
+      "url": "localhost:3000/",
+      "selector": "null",
+      "checkElHtmlName": "null",
+      "checkChildElementTag": "null",
+      "checkChildSelector": "null",
+      "checkPackageName": false,
+      "packageName": "null",
+      "top_level": true,
+      "clickProcedure": [
+        {
+          "desc": "cart number state",
+          "before": "#main-cart-btn",
+          "actionEl": ".add-to-cart-btn",
+          "action": "click"
+        }
+      ],
       "active": true
     }
   ]

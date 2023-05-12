@@ -15,23 +15,7 @@ async function fetchPackageJsonFromRepo(githubUrl) {
     let json = await axios({
       url: githubRawFileUrl,
       method: "get",
-    }).catch((error) => {
-      // console.log(`error in test ${error}`);
-      // if (error.response) {
-      //   // The request was made and the server responded with a status code
-      //   // that falls out of the range of 2xx
-      //   // console.log(error.response.status);
-      //   return error.response;
-      // } else if (error.request) {
-      //   // The request was made but no response was received
-      //   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      //   // http.ClientRequest in node.js
-      //   // console.log(error.request);
-      // } else {
-      //   // Something happened in setting up the request that triggered an Error
-      //   // console.log("Error", error.message);
-      // }
-    });
+    }).catch((error) => {});
     return json.data;
   } catch (e) {
     return { success: false };
@@ -122,6 +106,47 @@ function runFrontendTestsFunc(testsArr, runnerThisObj) {
               }
             });
           }
+          if (!!test.clickProcedure) {
+            test.clickProcedure.forEach((actionTest) => {
+              it(`check change in value after an action`, async () => {
+                await page.goto(`http://localhost:3000/`, {
+                  timeout: 60000,
+                  waitUntil: "domcontentloaded",
+                });
+                // expect("hello").toContain("hello");
+                try {
+                  let beforeActionTxtContent = await page.$eval(
+                    `${actionTest.before}`,
+                    (el) => el.textContent
+                  );
+
+                  await page.waitForSelector(`${actionTest.before}`);
+                  await page.waitForSelector(`${actionTest.actionEl}`);
+                  // evaluate code on a particular selector
+                  await page.$$eval(".add-to-cart-btn", (els) => {
+                    // let counter = 0;
+                    for (const addToCartEl of els) {
+                      addToCartEl.click();
+                      // counter++;
+                    }
+                    // return counter;
+                  });
+
+                  let afterActionTxtContent = await page.$eval(
+                    `${actionTest.before}`,
+                    (el) => el.textContent
+                  );
+                  // console.log(beforeActionTxtContent, afterActionTxtContent);
+                  if (beforeActionTxtContent == afterActionTxtContent) {
+                    throw new Error("the state has not changed");
+                  }
+                  expect(true).to.equal(true);
+                } catch (err) {
+                  expect(true).to.equal(false);
+                }
+              });
+            });
+          }
         });
       }
     });
@@ -134,7 +159,7 @@ module.exports = runFrontendTestsFunc;
 /*
 frontend test cases:
 
-check id with given id or classes
+check id with given id or classes - done
 
 // check weather all the elements tring to click does exist or not
 and will click on the elements using puppeteer
@@ -149,7 +174,7 @@ these are the procedures with 3 steps
 
 screenshot all or screenshot home option
 
-check packages in project:
+check packages in project: - done
 
 check react:
 
@@ -158,4 +183,6 @@ download the github repo and go to package json and find the react and react dom
 
 for frontend tests also includes the console log errors at the end of the tests and will have a ss or text of it. preferably ss.
 
+
+no cdn are allowed and only
 */
